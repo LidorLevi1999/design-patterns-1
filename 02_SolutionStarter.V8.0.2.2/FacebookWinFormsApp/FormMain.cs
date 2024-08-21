@@ -25,6 +25,15 @@ namespace BasicFacebookFeatures
             m_AppSettings.LastAccessToken = "EAAMxtnKGm0QBO5i9NRTwTbSeOtv2WMed9IhgQUrqFZCeiBcBrAM2u6y6BXw3K3IFen7DrvxG3JDvwqxA16jyByvIpnRQzwgruKSZAXRjcKyOH2iMWSU5ZCkicLNXKRfNuD5H17hGK2X2QvwchbiTXffZAzVoPSSkOXW0kUrlbpcZCIajR0tOwgUKvagZDZD";
             if (m_AppSettings.RememberUser)
             {
+                // Hide the login tab
+                HideTab(loginTabPage);
+
+                this.generalTabControl.Controls.Add(this.feedTabPage);
+                this.generalTabControl.Controls.Add(this.profileTabPage);
+                this.generalTabControl.Controls.Add(this.logoutTabPage);
+
+                // Optionally, select the feed tab after login
+                generalTabControl.SelectedTab = feedTabPage;
                 m_LoginResult = FacebookService.Connect(m_AppSettings.LastAccessToken);
                 handleUserLoggedIn();
             }
@@ -62,6 +71,15 @@ namespace BasicFacebookFeatures
 
             if (m_LoginResult.LoggedInUser != null)
             {
+                // Hide the login tab
+                HideTab(loginTabPage);
+
+                this.generalTabControl.Controls.Add(this.feedTabPage);
+                this.generalTabControl.Controls.Add(this.profileTabPage);
+                this.generalTabControl.Controls.Add(this.logoutTabPage);
+
+                // Optionally, select the feed tab after login
+                generalTabControl.SelectedTab = feedTabPage;
                 handleUserLoggedIn();
             }
             else { m_LoginResult = null; }
@@ -89,20 +107,8 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = true;
             rememberMeCheckBox.Enabled = true;
             rememberMeCheckBox.Checked = false;
-            label1.Text = String.Format(@"Your birthday is at : {0}", m_LoginResult.LoggedInUser.Birthday);
-            label2.Text = String.Format(@"Your email is : {0}", m_LoginResult.LoggedInUser.Email);
-            label3.Text = String.Format(@"Your gender is : {0}", m_LoginResult.LoggedInUser.Gender);
-            label4.Text = String.Format(@"Your Location is : {0}", m_LoginResult.LoggedInUser.Location.Name);
-            listBox1.DisplayMember = "Name";
-            listBox2.DisplayMember = "Name";
-            listBox3.DisplayMember = "Title";
-            listBox1.DataSource = m_LoginResult.LoggedInUser.FavofriteTeams;
-            listBox2.DataSource = m_LoginResult.LoggedInUser.LikedPages;
-            calendarStart.SetDate(new DateTime(2007,1,1)); // or a specific earliest date
-            calendarEnd.SetDate(DateTime.Today);
-
-            listBox3.DataSource = m_LoginResult.LoggedInUser.Posts.OrderByDescending(post => post.UpdateTime).ToList();
-        }
+            
+            }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -208,8 +214,81 @@ namespace BasicFacebookFeatures
                                     .ToList();
 
             // Update the ListBox data source
-            listBox3.DataSource = filteredPosts;
+            postsListBox.DataSource = filteredPosts;
         }
 
+        private void label9_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LoadProfileData()
+        {
+            // Example data - replace with actual data source
+            userName.Text = m_LoginResult.LoggedInUser.Name;
+            profilePictureBox.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
+            userBirthday.Text = String.Format(@"Your birthday is at : {0}", m_LoginResult.LoggedInUser.Birthday);
+            userEmail.Text = String.Format(@"Your email is : {0}", m_LoginResult.LoggedInUser.Email);
+            userGender.Text = String.Format(@"Your gender is : {0}", m_LoginResult.LoggedInUser.Gender);
+            userLocation.Text = String.Format(@"Your Location is : {0}", m_LoginResult.LoggedInUser.Location.Name);
+        }
+
+        private void LoadFeedData()
+        {
+            favouriteTeamsListBox.DisplayMember = "Name";
+            likedPagesListBox.DisplayMember = "Name";
+            postsListBox.DisplayMember = "Title";
+            favouriteTeamsListBox.DataSource = m_LoginResult.LoggedInUser.FavofriteTeams;
+            likedPagesListBox.DataSource = m_LoginResult.LoggedInUser.LikedPages;
+            calendarStart.SetDate(new DateTime(2007, 1, 1)); // or a specific earliest date
+            calendarEnd.SetDate(DateTime.Today);
+
+            postsListBox.DataSource = m_LoginResult.LoggedInUser.Posts.OrderByDescending(post => post.UpdateTime).ToList();
+
+        }
+
+        private void LoadLogoutPage()
+        {
+            // logout from account
+            MessageBox.Show("Are you sure you want to logout?");
+        }
+
+        private void label5_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void generalTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            TabPage selectedTab = generalTabControl.SelectedTab;
+
+            if (selectedTab == feedTabPage)
+            {
+                LoadFeedData();
+            }
+            else if (selectedTab == profileTabPage)
+            {
+                LoadProfileData();
+            }
+            else if (selectedTab == logoutTabPage)
+            {
+                LoadLogoutPage();
+            }
+        }
     }
 }
