@@ -38,8 +38,9 @@ namespace BasicFacebookFeatures
             this.rememberMeCheckBox = new System.Windows.Forms.CheckBox();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
             this.feedTabPage = new System.Windows.Forms.TabPage();
+            this.logoutButton = new System.Windows.Forms.Button();
             this.likedPagesGroup = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.likedPagePicture = new System.Windows.Forms.PictureBox();
             this.likedPagesLabel = new System.Windows.Forms.Label();
             this.likedPagesListBox = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -49,33 +50,29 @@ namespace BasicFacebookFeatures
             this.postsLabel = new System.Windows.Forms.Label();
             this.postsListBox = new System.Windows.Forms.ListBox();
             this.favouriteTeamsGroup = new System.Windows.Forms.GroupBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.favouriteTeamPicture = new System.Windows.Forms.PictureBox();
             this.favouriteTeamsLabel = new System.Windows.Forms.Label();
             this.favouriteTeamsListBox = new System.Windows.Forms.ListBox();
             this.calendarEnd = new System.Windows.Forms.MonthCalendar();
             this.calendarStart = new System.Windows.Forms.MonthCalendar();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.profileTabPage = new System.Windows.Forms.TabPage();
+            this.button2 = new System.Windows.Forms.Button();
             this.userName = new System.Windows.Forms.Label();
             this.profilePictureBox = new System.Windows.Forms.PictureBox();
             this.userBirthday = new System.Windows.Forms.Label();
             this.userEmail = new System.Windows.Forms.Label();
             this.userGender = new System.Windows.Forms.Label();
             this.userLocation = new System.Windows.Forms.Label();
-            this.logoutTabPage = new System.Windows.Forms.TabPage();
             this.generalTabControl.SuspendLayout();
             this.loginTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.feedTabPage.SuspendLayout();
             this.likedPagesGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.likedPagePicture)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.postsGroup.SuspendLayout();
             this.favouriteTeamsGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.favouriteTeamPicture)).BeginInit();
             this.profileTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureBox)).BeginInit();
             this.SuspendLayout();
@@ -108,7 +105,6 @@ namespace BasicFacebookFeatures
             // 
             this.generalTabControl.AccessibleName = "generalTabControl";
             this.generalTabControl.Controls.Add(this.loginTabPage);
-            
             this.generalTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.generalTabControl.Font = new System.Drawing.Font("Microsoft Tai Le", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.generalTabControl.Location = new System.Drawing.Point(0, 0);
@@ -157,14 +153,13 @@ namespace BasicFacebookFeatures
             // feedTabPage
             // 
             this.feedTabPage.AccessibleName = "feedTabPage";
+            this.feedTabPage.Controls.Add(this.logoutButton);
             this.feedTabPage.Controls.Add(this.likedPagesGroup);
             this.feedTabPage.Controls.Add(this.groupBox4);
             this.feedTabPage.Controls.Add(this.postsGroup);
             this.feedTabPage.Controls.Add(this.favouriteTeamsGroup);
             this.feedTabPage.Controls.Add(this.calendarEnd);
             this.feedTabPage.Controls.Add(this.calendarStart);
-            this.feedTabPage.Controls.Add(this.pictureBox2);
-            this.feedTabPage.Controls.Add(this.pictureBox1);
             this.feedTabPage.Location = new System.Drawing.Point(8, 51);
             this.feedTabPage.Name = "feedTabPage";
             this.feedTabPage.Padding = new System.Windows.Forms.Padding(3);
@@ -173,10 +168,22 @@ namespace BasicFacebookFeatures
             this.feedTabPage.Text = "My Feed";
             this.feedTabPage.UseVisualStyleBackColor = true;
             // 
+            // logoutButton
+            // 
+            this.logoutButton.AccessibleName = "logoutButton";
+            this.logoutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.logoutButton.Location = new System.Drawing.Point(2190, 6);
+            this.logoutButton.Name = "logoutButton";
+            this.logoutButton.Size = new System.Drawing.Size(124, 49);
+            this.logoutButton.TabIndex = 75;
+            this.logoutButton.Text = "Logout";
+            this.logoutButton.UseVisualStyleBackColor = true;
+            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
+            // 
             // likedPagesGroup
             // 
             this.likedPagesGroup.AccessibleName = "likedPagesGroup";
-            this.likedPagesGroup.Controls.Add(this.pictureBox3);
+            this.likedPagesGroup.Controls.Add(this.likedPagePicture);
             this.likedPagesGroup.Controls.Add(this.likedPagesLabel);
             this.likedPagesGroup.Controls.Add(this.likedPagesListBox);
             this.likedPagesGroup.Location = new System.Drawing.Point(53, 28);
@@ -185,13 +192,14 @@ namespace BasicFacebookFeatures
             this.likedPagesGroup.TabIndex = 72;
             this.likedPagesGroup.TabStop = false;
             // 
-            // pictureBox3
+            // likedPagePicture
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(267, 245);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(69, 63);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
+            this.likedPagePicture.AccessibleName = "likedPagePicture";
+            this.likedPagePicture.Location = new System.Drawing.Point(267, 245);
+            this.likedPagePicture.Name = "likedPagePicture";
+            this.likedPagePicture.Size = new System.Drawing.Size(69, 63);
+            this.likedPagePicture.TabIndex = 2;
+            this.likedPagePicture.TabStop = false;
             // 
             // likedPagesLabel
             // 
@@ -199,7 +207,7 @@ namespace BasicFacebookFeatures
             this.likedPagesLabel.AutoSize = true;
             this.likedPagesLabel.Location = new System.Drawing.Point(21, 41);
             this.likedPagesLabel.Name = "likedPagesLabel";
-            this.likedPagesLabel.Size = new System.Drawing.Size(174, 38);
+            this.likedPagesLabel.Size = new System.Drawing.Size(131, 25);
             this.likedPagesLabel.TabIndex = 1;
             this.likedPagesLabel.Text = "Liked Pages";
             this.likedPagesLabel.Click += new System.EventHandler(this.label9_Click);
@@ -207,11 +215,13 @@ namespace BasicFacebookFeatures
             // likedPagesListBox
             // 
             this.likedPagesListBox.FormattingEnabled = true;
-            this.likedPagesListBox.ItemHeight = 37;
+            this.likedPagesListBox.ItemHeight = 25;
             this.likedPagesListBox.Location = new System.Drawing.Point(28, 82);
             this.likedPagesListBox.Name = "likedPagesListBox";
-            this.likedPagesListBox.Size = new System.Drawing.Size(308, 226);
+            this.likedPagesListBox.Size = new System.Drawing.Size(308, 204);
             this.likedPagesListBox.TabIndex = 0;
+            this.likedPagesListBox.SelectedIndexChanged += new System.EventHandler(this.likedPagesListBox_SelectedIndexChanged);
+            this.likedPagesListBox.DoubleClick += new System.EventHandler(this.likedPagesListBox_DoubleClick);
             // 
             // groupBox4
             // 
@@ -219,7 +229,7 @@ namespace BasicFacebookFeatures
             this.groupBox4.Controls.Add(this.listBox7);
             this.groupBox4.Location = new System.Drawing.Point(483, 380);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(408, 339);
+            this.groupBox4.Size = new System.Drawing.Size(436, 339);
             this.groupBox4.TabIndex = 74;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "groupBox4";
@@ -229,7 +239,7 @@ namespace BasicFacebookFeatures
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(21, 41);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(112, 38);
+            this.label11.Size = new System.Drawing.Size(82, 25);
             this.label11.TabIndex = 1;
             this.label11.Text = "label11";
             // 
@@ -247,9 +257,9 @@ namespace BasicFacebookFeatures
             this.postsGroup.AccessibleName = "postsGroup";
             this.postsGroup.Controls.Add(this.postsLabel);
             this.postsGroup.Controls.Add(this.postsListBox);
-            this.postsGroup.Location = new System.Drawing.Point(455, 28);
+            this.postsGroup.Location = new System.Drawing.Point(483, 28);
             this.postsGroup.Name = "postsGroup";
-            this.postsGroup.Size = new System.Drawing.Size(408, 339);
+            this.postsGroup.Size = new System.Drawing.Size(436, 346);
             this.postsGroup.TabIndex = 71;
             this.postsGroup.TabStop = false;
             this.postsGroup.Enter += new System.EventHandler(this.groupBox1_Enter);
@@ -260,7 +270,7 @@ namespace BasicFacebookFeatures
             this.postsLabel.AutoSize = true;
             this.postsLabel.Location = new System.Drawing.Point(21, 41);
             this.postsLabel.Name = "postsLabel";
-            this.postsLabel.Size = new System.Drawing.Size(88, 38);
+            this.postsLabel.Size = new System.Drawing.Size(66, 25);
             this.postsLabel.TabIndex = 1;
             this.postsLabel.Text = "Posts";
             this.postsLabel.Click += new System.EventHandler(this.label8_Click);
@@ -277,7 +287,7 @@ namespace BasicFacebookFeatures
             // 
             // favouriteTeamsGroup
             // 
-            this.favouriteTeamsGroup.Controls.Add(this.pictureBox4);
+            this.favouriteTeamsGroup.Controls.Add(this.favouriteTeamPicture);
             this.favouriteTeamsGroup.Controls.Add(this.favouriteTeamsLabel);
             this.favouriteTeamsGroup.Controls.Add(this.favouriteTeamsListBox);
             this.favouriteTeamsGroup.Location = new System.Drawing.Point(53, 380);
@@ -286,13 +296,14 @@ namespace BasicFacebookFeatures
             this.favouriteTeamsGroup.TabIndex = 73;
             this.favouriteTeamsGroup.TabStop = false;
             // 
-            // pictureBox4
+            // favouriteTeamPicture
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(267, 245);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(69, 63);
-            this.pictureBox4.TabIndex = 3;
-            this.pictureBox4.TabStop = false;
+            this.favouriteTeamPicture.AccessibleName = "favouriteTeamPicture";
+            this.favouriteTeamPicture.Location = new System.Drawing.Point(267, 245);
+            this.favouriteTeamPicture.Name = "favouriteTeamPicture";
+            this.favouriteTeamPicture.Size = new System.Drawing.Size(69, 63);
+            this.favouriteTeamPicture.TabIndex = 3;
+            this.favouriteTeamPicture.TabStop = false;
             // 
             // favouriteTeamsLabel
             // 
@@ -300,7 +311,7 @@ namespace BasicFacebookFeatures
             this.favouriteTeamsLabel.AutoSize = true;
             this.favouriteTeamsLabel.Location = new System.Drawing.Point(21, 41);
             this.favouriteTeamsLabel.Name = "favouriteTeamsLabel";
-            this.favouriteTeamsLabel.Size = new System.Drawing.Size(240, 38);
+            this.favouriteTeamsLabel.Size = new System.Drawing.Size(179, 25);
             this.favouriteTeamsLabel.TabIndex = 1;
             this.favouriteTeamsLabel.Text = "Favourite Teams:";
             // 
@@ -313,6 +324,7 @@ namespace BasicFacebookFeatures
             this.favouriteTeamsListBox.Name = "favouriteTeamsListBox";
             this.favouriteTeamsListBox.Size = new System.Drawing.Size(308, 226);
             this.favouriteTeamsListBox.TabIndex = 0;
+            this.favouriteTeamsListBox.SelectedIndexChanged += new System.EventHandler(this.favouriteTeamsListBox_SelectedIndexChanged);
             // 
             // calendarEnd
             // 
@@ -328,26 +340,10 @@ namespace BasicFacebookFeatures
             this.calendarStart.TabIndex = 69;
             this.calendarStart.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.calendarStart_DateChanged);
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Location = new System.Drawing.Point(1161, 655);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(59, 50);
-            this.pictureBox2.TabIndex = 65;
-            this.pictureBox2.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(940, 655);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(60, 50);
-            this.pictureBox1.TabIndex = 63;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            // 
             // profileTabPage
             // 
             this.profileTabPage.AccessibleName = "profileTabPage";
+            this.profileTabPage.Controls.Add(this.button2);
             this.profileTabPage.Controls.Add(this.userName);
             this.profileTabPage.Controls.Add(this.profilePictureBox);
             this.profileTabPage.Controls.Add(this.userBirthday);
@@ -362,12 +358,23 @@ namespace BasicFacebookFeatures
             this.profileTabPage.Text = "My Profile";
             this.profileTabPage.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            this.button2.AccessibleName = "logoutButton";
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(2196, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(124, 49);
+            this.button2.TabIndex = 63;
+            this.button2.Text = "Logout";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
             // userName
             // 
             this.userName.AutoSize = true;
             this.userName.Location = new System.Drawing.Point(229, 45);
             this.userName.Name = "userName";
-            this.userName.Size = new System.Drawing.Size(96, 38);
+            this.userName.Size = new System.Drawing.Size(68, 25);
             this.userName.TabIndex = 62;
             this.userName.Text = "Name";
             this.userName.Click += new System.EventHandler(this.label5_Click_1);
@@ -386,27 +393,25 @@ namespace BasicFacebookFeatures
             this.userBirthday.AutoSize = true;
             this.userBirthday.Location = new System.Drawing.Point(33, 215);
             this.userBirthday.Name = "userBirthday";
-            this.userBirthday.Size = new System.Drawing.Size(182, 38);
+            this.userBirthday.Size = new System.Drawing.Size(133, 25);
             this.userBirthday.TabIndex = 57;
             this.userBirthday.Text = "userBirthday";
-            this.userBirthday.Click += new System.EventHandler(this.label1_Click);
             // 
             // userEmail
             // 
             this.userEmail.AutoSize = true;
             this.userEmail.Location = new System.Drawing.Point(33, 255);
             this.userEmail.Name = "userEmail";
-            this.userEmail.Size = new System.Drawing.Size(143, 38);
+            this.userEmail.Size = new System.Drawing.Size(107, 25);
             this.userEmail.TabIndex = 58;
             this.userEmail.Text = "userEmail";
-            this.userEmail.Click += new System.EventHandler(this.label2_Click);
             // 
             // userGender
             // 
             this.userGender.AutoSize = true;
             this.userGender.Location = new System.Drawing.Point(33, 296);
             this.userGender.Name = "userGender";
-            this.userGender.Size = new System.Drawing.Size(171, 38);
+            this.userGender.Size = new System.Drawing.Size(125, 25);
             this.userGender.TabIndex = 59;
             this.userGender.Text = "userGender";
             // 
@@ -415,20 +420,9 @@ namespace BasicFacebookFeatures
             this.userLocation.AutoSize = true;
             this.userLocation.Location = new System.Drawing.Point(33, 343);
             this.userLocation.Name = "userLocation";
-            this.userLocation.Size = new System.Drawing.Size(186, 38);
+            this.userLocation.Size = new System.Drawing.Size(136, 25);
             this.userLocation.TabIndex = 60;
             this.userLocation.Text = "userLocation";
-            // 
-            // logoutTabPage
-            // 
-            this.logoutTabPage.AccessibleName = "logoutTabPage";
-            this.logoutTabPage.Location = new System.Drawing.Point(8, 51);
-            this.logoutTabPage.Name = "logoutTabPage";
-            this.logoutTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.logoutTabPage.Size = new System.Drawing.Size(2320, 1104);
-            this.logoutTabPage.TabIndex = 3;
-            this.logoutTabPage.Text = "Logout";
-            this.logoutTabPage.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -449,16 +443,14 @@ namespace BasicFacebookFeatures
             this.feedTabPage.ResumeLayout(false);
             this.likedPagesGroup.ResumeLayout(false);
             this.likedPagesGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.likedPagePicture)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.postsGroup.ResumeLayout(false);
             this.postsGroup.PerformLayout();
             this.favouriteTeamsGroup.ResumeLayout(false);
             this.favouriteTeamsGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.favouriteTeamPicture)).EndInit();
             this.profileTabPage.ResumeLayout(false);
             this.profileTabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.profilePictureBox)).EndInit();
@@ -506,8 +498,6 @@ namespace BasicFacebookFeatures
         private System.Windows.Forms.Label userBirthday;
         private System.Windows.Forms.Label userLocation;
         private System.Windows.Forms.Label userGender;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.MonthCalendar calendarEnd;
         private System.Windows.Forms.MonthCalendar calendarStart;
         private System.Windows.Forms.GroupBox postsGroup;
@@ -522,14 +512,15 @@ namespace BasicFacebookFeatures
         private System.Windows.Forms.GroupBox likedPagesGroup;
         private System.Windows.Forms.Label likedPagesLabel;
         private System.Windows.Forms.ListBox likedPagesListBox;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.PictureBox likedPagePicture;
+        private System.Windows.Forms.PictureBox favouriteTeamPicture;
         private System.Windows.Forms.Label userName;
         private System.Windows.Forms.PictureBox profilePictureBox;
         private System.Windows.Forms.Label userEmail;
         private System.Windows.Forms.TabPage feedTabPage;
         private System.Windows.Forms.TabPage profileTabPage;
-        private System.Windows.Forms.TabPage logoutTabPage;
+        private Button logoutButton;
+        private Button button2;
     }
 }
 

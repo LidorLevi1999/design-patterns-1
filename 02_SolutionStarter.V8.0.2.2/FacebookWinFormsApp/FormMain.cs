@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -30,7 +29,6 @@ namespace BasicFacebookFeatures
 
                 this.generalTabControl.Controls.Add(this.feedTabPage);
                 this.generalTabControl.Controls.Add(this.profileTabPage);
-                this.generalTabControl.Controls.Add(this.logoutTabPage);
 
                 // Optionally, select the feed tab after login
                 generalTabControl.SelectedTab = feedTabPage;
@@ -76,7 +74,6 @@ namespace BasicFacebookFeatures
 
                 this.generalTabControl.Controls.Add(this.feedTabPage);
                 this.generalTabControl.Controls.Add(this.profileTabPage);
-                this.generalTabControl.Controls.Add(this.logoutTabPage);
 
                 // Optionally, select the feed tab after login
                 generalTabControl.SelectedTab = feedTabPage;
@@ -130,21 +127,6 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            pictureBox1.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
-        }
-
         private void label5_Click(object sender, EventArgs e)
         {
 
@@ -173,11 +155,6 @@ namespace BasicFacebookFeatures
         private void label6_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            pictureBox2.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
         }
 
         private void label7_Click(object sender, EventArgs e)
@@ -232,10 +209,7 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-
-        }
+    
 
         private void LoadProfileData()
         {
@@ -262,12 +236,6 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void LoadLogoutPage()
-        {
-            // logout from account
-            MessageBox.Show("Are you sure you want to logout?");
-        }
-
         private void label5_Click_1(object sender, EventArgs e)
         {
 
@@ -285,10 +253,67 @@ namespace BasicFacebookFeatures
             {
                 LoadProfileData();
             }
-            else if (selectedTab == logoutTabPage)
+        }
+
+        private void likedPagesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            likedPagePicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
+
+        }
+
+
+        private void ShowLikedPageDetails(Page page)
+        {
+            LikedPageDetailsForm detailsForm = new LikedPageDetailsForm(page);
+            
+            detailsForm.ShowDialog(); // Show the popup as a dialog
+        }
+
+        private void favouriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            favouriteTeamPicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
+        }
+
+        private void logoutButton_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Check the user's response
+            if (result == DialogResult.Yes)
             {
-                LoadLogoutPage();
+                // Perform the logout operation
+                PerformLogout();
             }
+        }
+
+        private void PerformLogout()
+        {
+            if (!string.IsNullOrEmpty(m_AppSettings.LastAccessToken))
+            {
+                   
+                // FacebookService.Logout();
+   
+                // Successfully logged out
+                ClearUserSession(); // Clear session and return to login screen
+            }
+        }
+
+
+        private void ClearUserSession()
+        {
+            // Example logout logic: Show the login tab and hide others
+            HideTab(feedTabPage);
+            HideTab(profileTabPage);
+            ShowTab(loginTabPage);
+
+            // Optionally, reset any other application state
+            MessageBox.Show("You have been logged out.", "Logout Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void likedPagesListBox_DoubleClick(object sender, EventArgs e)
+        {
+            Page selectedPage = (sender as ListBox).SelectedItem as Page;
+            ShowLikedPageDetails(selectedPage);
         }
     }
 }
