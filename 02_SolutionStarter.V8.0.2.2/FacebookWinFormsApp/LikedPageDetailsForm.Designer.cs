@@ -36,29 +36,33 @@
             // likedPageProfilePicture
             // 
             this.likedPageProfilePicture.AccessibleName = "likedPageProfilePicture";
-            this.likedPageProfilePicture.Location = new System.Drawing.Point(12, 12);
+            this.likedPageProfilePicture.Location = new System.Drawing.Point(6, 6);
+            this.likedPageProfilePicture.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.likedPageProfilePicture.Name = "likedPageProfilePicture";
-            this.likedPageProfilePicture.Size = new System.Drawing.Size(170, 203);
+            this.likedPageProfilePicture.Size = new System.Drawing.Size(85, 106);
             this.likedPageProfilePicture.TabIndex = 0;
             this.likedPageProfilePicture.TabStop = false;
+            this.likedPageProfilePicture.Click += new System.EventHandler(this.likedPageProfilePicture_Click);
             // 
             // pageName
             // 
             this.pageName.AccessibleName = "pageName";
             this.pageName.AutoSize = true;
-            this.pageName.Location = new System.Drawing.Point(221, 38);
+            this.pageName.Location = new System.Drawing.Point(110, 20);
+            this.pageName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.pageName.Name = "pageName";
-            this.pageName.Size = new System.Drawing.Size(0, 25);
+            this.pageName.Size = new System.Drawing.Size(0, 15);
             this.pageName.TabIndex = 1;
             this.pageName.Click += new System.EventHandler(this.label1_Click);
             // 
             // LikedPageDetailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 676);
+            this.ClientSize = new System.Drawing.Size(400, 352);
             this.Controls.Add(this.pageName);
             this.Controls.Add(this.likedPageProfilePicture);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "LikedPageDetailsForm";
             this.Text = "LikedPageDetailsForm";
             this.Load += new System.EventHandler(this.LikedPageDetailsForm_Load);

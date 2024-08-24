@@ -9,8 +9,10 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
-        LoginResult m_LoginResult;
-        AppSettings m_AppSettings;
+        private LoginResult m_LoginResult;
+        private AppSettings m_AppSettings;
+        internal LoginResult LoginResult { get { return m_LoginResult; } }
+        private IFacebookTab selectedTab;
 
         public string FacebookAppId { get; } = "899084605365060";
 
@@ -19,6 +21,7 @@ namespace BasicFacebookFeatures
             m_AppSettings = new AppSettings();
             m_AppSettings.LoadAppSettings();
             InitializeComponent();
+            this.CreateFeedTab();
             FacebookWrapper.FacebookService.s_CollectionLimit = 100;
             m_AppSettings.RememberUser = true;
             m_AppSettings.LastAccessToken = "EAAMxtnKGm0QBO5i9NRTwTbSeOtv2WMed9IhgQUrqFZCeiBcBrAM2u6y6BXw3K3IFen7DrvxG3JDvwqxA16jyByvIpnRQzwgruKSZAXRjcKyOH2iMWSU5ZCkicLNXKRfNuD5H17hGK2X2QvwchbiTXffZAzVoPSSkOXW0kUrlbpcZCIajR0tOwgUKvagZDZD";
@@ -31,7 +34,8 @@ namespace BasicFacebookFeatures
                 this.generalTabControl.Controls.Add(this.profileTabPage);
 
                 // Optionally, select the feed tab after login
-                generalTabControl.SelectedTab = feedTabPage;
+                //generalTabControl.SelectedTab = feedTab as Form;
+                //selectedTab = d;
                 m_LoginResult = FacebookService.Connect(m_AppSettings.LastAccessToken);
                 handleUserLoggedIn();
             }
@@ -180,6 +184,7 @@ namespace BasicFacebookFeatures
 
         private void UpdateFilteredPosts()
         {
+            /*
             // Get the selected start and end dates
             DateTime startDate = calendarStart.SelectionStart;
             DateTime endDate = calendarEnd.SelectionStart;
@@ -192,6 +197,7 @@ namespace BasicFacebookFeatures
 
             // Update the ListBox data source
             postsListBox.DataSource = filteredPosts;
+            */
         }
 
         private void label9_Click(object sender, EventArgs e)
@@ -224,15 +230,6 @@ namespace BasicFacebookFeatures
 
         private void LoadFeedData()
         {
-            favouriteTeamsListBox.DisplayMember = "Name";
-            likedPagesListBox.DisplayMember = "Name";
-            postsListBox.DisplayMember = "Title";
-            favouriteTeamsListBox.DataSource = m_LoginResult.LoggedInUser.FavofriteTeams;
-            likedPagesListBox.DataSource = m_LoginResult.LoggedInUser.LikedPages;
-            calendarStart.SetDate(new DateTime(2007, 1, 1)); // or a specific earliest date
-            calendarEnd.SetDate(DateTime.Today);
-
-            postsListBox.DataSource = m_LoginResult.LoggedInUser.Posts.OrderByDescending(post => post.UpdateTime).ToList();
 
         }
 
@@ -257,7 +254,7 @@ namespace BasicFacebookFeatures
 
         private void likedPagesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            likedPagePicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
+            //likedPagePicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
 
         }
 
@@ -271,7 +268,7 @@ namespace BasicFacebookFeatures
 
         private void favouriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            favouriteTeamPicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
+            //favouriteTeamPicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
@@ -302,7 +299,7 @@ namespace BasicFacebookFeatures
         private void ClearUserSession()
         {
             // Example logout logic: Show the login tab and hide others
-            HideTab(feedTabPage);
+            HideTab(feedTabPage as TabPage);
             HideTab(profileTabPage);
             ShowTab(loginTabPage);
 
@@ -315,5 +312,23 @@ namespace BasicFacebookFeatures
             Page selectedPage = (sender as ListBox).SelectedItem as Page;
             ShowLikedPageDetails(selectedPage);
         }
+
+        private void pictureBoxProfile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void CreateFeedTab()
+        {
+            // Instantiate the UserControl for the Feed tab
+            FeedTab feedTab = new FeedTab();
+
+            // Create a new TabPage and set its properties
+            TabPage feedTabPage = new TabPage(feedTab.Name);
+            feedTabPage.Controls.Add(feedTab);
+
+            this.feedTabPage = feedTabPage;
+        }
+
     }
 }

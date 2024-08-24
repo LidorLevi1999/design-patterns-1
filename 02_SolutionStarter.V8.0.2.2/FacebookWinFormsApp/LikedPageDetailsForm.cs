@@ -36,5 +36,10 @@ namespace BasicFacebookFeatures
         {
 
         }
+
+        private void likedPageProfilePicture_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
