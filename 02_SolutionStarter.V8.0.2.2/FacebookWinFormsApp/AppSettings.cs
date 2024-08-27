@@ -7,10 +7,23 @@ namespace BasicFacebookFeatures
 {
     public class AppSettings
     {
+        private static AppSettings sr_Instance = null;
+        public static AppSettings Instance
+        {
+            get
+            {
+                if(sr_Instance == null)
+                {
+                    sr_Instance = new AppSettings();
+                }
+
+                return sr_Instance;
+            }
+        }
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
 
-        public AppSettings() 
+        private AppSettings() 
         {
             RememberUser = false;
             LastAccessToken = null;

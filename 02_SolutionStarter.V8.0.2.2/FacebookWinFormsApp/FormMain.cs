@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
+using Facebook;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
@@ -9,38 +10,108 @@ namespace BasicFacebookFeatures
 {
     public partial class FormMain : Form
     {
+        private Screen CurrentScreen { get; set; }
+
+        private Size SizeOnLoginTab { get; } = new Size(682, 408);
         private LoginResult m_LoginResult;
-        private AppSettings m_AppSettings;
         internal LoginResult LoginResult { get { return m_LoginResult; } }
-        private IFacebookTab selectedTab;
-
-        public string FacebookAppId { get; } = "899084605365060";
-
+        private Size m_MinimumSize = new Size(800, 800);
+        //public string FacebookAppId { get; } = "899084605365060";
+        public string FacebookAppId { get; } = "611392880818813";
         public FormMain()
         {
-            m_AppSettings = new AppSettings();
-            m_AppSettings.LoadAppSettings();
+            lockFormSize();
+            AppSettings.Instance.LoadAppSettings();
             InitializeComponent();
-            this.CreateFeedTab();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 100;
-            m_AppSettings.RememberUser = true;
-            m_AppSettings.LastAccessToken = "EAAMxtnKGm0QBO5i9NRTwTbSeOtv2WMed9IhgQUrqFZCeiBcBrAM2u6y6BXw3K3IFen7DrvxG3JDvwqxA16jyByvIpnRQzwgruKSZAXRjcKyOH2iMWSU5ZCkicLNXKRfNuD5H17hGK2X2QvwchbiTXffZAzVoPSSkOXW0kUrlbpcZCIajR0tOwgUKvagZDZD";
-            if (m_AppSettings.RememberUser)
+            FacebookWrapper.FacebookService.s_CollectionLimit = 5;
+            if (AppSettings.Instance.RememberUser)
             {
-                // Hide the login tab
-                HideTab(loginTabPage);
+                Thread connectThread = new Thread(() =>
+                {
+                    m_LoginResult = FacebookService.Connect(AppSettings.Instance.LastAccessToken);
 
-                this.generalTabControl.Controls.Add(this.feedTabPage);
-                this.generalTabControl.Controls.Add(this.profileTabPage);
+                    if (m_LoginResult.LoggedInUser != null)
+                    {
+                        this.Invoke((MethodInvoker)initializeCustomTabs);
+                    }
+                });
 
-                // Optionally, select the feed tab after login
-                //generalTabControl.SelectedTab = feedTab as Form;
-                //selectedTab = d;
-                m_LoginResult = FacebookService.Connect(m_AppSettings.LastAccessToken);
-                handleUserLoggedIn();
+                connectThread.Start();
             }
         }
 
+        private void lockFormSize()
+        {
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+        }
+
+        private void MainForm_LocationChanged(object sender, EventArgs e)
+        {
+            CurrentScreen = Screen.FromControl(this);
+        }
+
+        private void MainForm_OnFormClosing(object sender, EventArgs e)
+        {
+            if (AppSettings.Instance.RememberUser && m_LoginResult != null)
+            {
+                AppSettings.Instance.LastAccessToken = m_LoginResult.AccessToken;
+                AppSettings.Instance.SaveAppSettings();
+            }
+            else
+            {
+                AppSettings.Instance.DeleteAppSettings();
+            }
+        }
+
+
+
+        private void initializeCustomTabs()
+        {
+            this.CreateFeedTab();
+            this.createProfilePageTab();
+            this.initTabControl();
+            HideTab(loginTabPage);
+            this.expandAndLockFormSize();
+        }
+
+        private void expandAndLockFormSize()
+        {
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.Location = new Point(0, 20);
+            this.MaximizeBox = true;
+            Screen currentScreen = Screen.FromControl(this);
+            this.Size = currentScreen.Bounds.Size;
+            this.MinimumSize = this.m_MinimumSize;
+        }
+
+        private void initTabControl()
+        {
+            this.generalTabControl.Controls.Add(this.profileTabPage);
+            this.generalTabControl.Controls.Add(this.feedTabPage);
+            this.generalTabControl.SelectedTab = this.profileTabPage;
+        }
+
+        private void createProfilePageTab()
+        {
+            ProfilePageTab profileTabPage = new ProfilePageTab();
+            profileTabPage.loadProfileData(m_LoginResult.LoggedInUser);
+            profileTabPage.LogoutButtonClicked += profileTabPage_LogoutButtonClicked;
+
+            this.profileTabPage = new TabPage("My Profile");
+            this.profileTabPage.Controls.Add(profileTabPage);
+        }
+
+        private void profileTabPage_LogoutButtonClicked(object sender, EventArgs e)
+        {
+            // Handle the logout logic here in the MainForm
+            var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // Check the user's response
+            if (result == DialogResult.Yes)
+            {
+                PerformLogout();
+            }
+        }
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
@@ -53,8 +124,11 @@ namespace BasicFacebookFeatures
 
         private void login()
         {
-            m_LoginResult = FacebookService.Login(
-                FacebookAppId,
+            AppSettings.Instance.RememberUser = rememberMeCheckbox.Checked;
+            Thread loginThread = new Thread(() =>
+            {
+                m_LoginResult = FacebookService.Login(
+                    FacebookAppId,
                     "email",
                     "public_profile",
                     "user_age_range",
@@ -69,266 +143,79 @@ namespace BasicFacebookFeatures
                     "user_photos",
                     "user_posts",
                     "user_videos"
-                    );
+                );
 
-            if (m_LoginResult.LoggedInUser != null)
-            {
-                // Hide the login tab
-                HideTab(loginTabPage);
+                if (m_LoginResult.LoggedInUser != null)
+                {
+                    this.Invoke((MethodInvoker)initializeCustomTabs);
+                }
+                else
+                {
+                    m_LoginResult = null;
+                }
+            });
 
-                this.generalTabControl.Controls.Add(this.feedTabPage);
-                this.generalTabControl.Controls.Add(this.profileTabPage);
-
-                // Optionally, select the feed tab after login
-                generalTabControl.SelectedTab = feedTabPage;
-                handleUserLoggedIn();
-            }
-            else { m_LoginResult = null; }
-        }
-
-        private void buttonLogout_Click(object sender, EventArgs e)
-        {
-            buttonLogin.Text = "Login";
-            buttonLogin.BackColor = buttonLogout.BackColor;
-            m_LoginResult = null;
-            buttonLogin.Enabled = true;
-            buttonLogout.Enabled = false;
-            rememberMeCheckBox.Enabled = false;
-            rememberMeCheckBox.Checked = false;
-            pictureBoxProfile.ImageLocation = null;
-
-        }
-
-        private void handleUserLoggedIn()
-        {
-            buttonLogin.Text = $"Logged in as {m_LoginResult.LoggedInUser.Name}";
-            buttonLogin.BackColor = Color.LightGreen;
-            pictureBoxProfile.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-            buttonLogin.Enabled = false;
-            buttonLogout.Enabled = true;
-            rememberMeCheckBox.Enabled = true;
-            rememberMeCheckBox.Checked = false;
-            
-            }
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            base.OnFormClosed(e);
-            if(rememberMeCheckBox.Checked)
-            {
-                m_AppSettings.LastAccessToken = m_LoginResult.AccessToken;
-                m_AppSettings.RememberUser = true;
-                m_AppSettings.SaveAppSettings();
-            }
-            else
-            {
-                m_AppSettings.DeleteAppSettings();
-            }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void calendarStart_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            UpdateFilteredPosts();
-
-        }
-
-        private void calendarEnd_DateChanged(object sender, DateRangeEventArgs e)
-        {
-            UpdateFilteredPosts();
-
-        }
-
-        private void UpdateFilteredPosts()
-        {
-            /*
-            // Get the selected start and end dates
-            DateTime startDate = calendarStart.SelectionStart;
-            DateTime endDate = calendarEnd.SelectionStart;
-
-            // Filter posts between the selected dates
-            var filteredPosts = m_LoginResult.LoggedInUser.Posts
-                                    .Where(post => post.UpdateTime >= startDate && post.UpdateTime <= endDate)
-                                    .OrderByDescending(post => post.UpdateTime)
-                                    .ToList();
-
-            // Update the ListBox data source
-            postsListBox.DataSource = filteredPosts;
-            */
-        }
-
-        private void label9_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-    
-
-        private void LoadProfileData()
-        {
-            // Example data - replace with actual data source
-            userName.Text = m_LoginResult.LoggedInUser.Name;
-            profilePictureBox.ImageLocation = m_LoginResult.LoggedInUser.PictureNormalURL;
-            userBirthday.Text = String.Format(@"Your birthday is at : {0}", m_LoginResult.LoggedInUser.Birthday);
-            userEmail.Text = String.Format(@"Your email is : {0}", m_LoginResult.LoggedInUser.Email);
-            userGender.Text = String.Format(@"Your gender is : {0}", m_LoginResult.LoggedInUser.Gender);
-            userLocation.Text = String.Format(@"Your Location is : {0}", m_LoginResult.LoggedInUser.Location.Name);
-        }
-
-        private void LoadFeedData()
-        {
-
-        }
-
-        private void label5_Click_1(object sender, EventArgs e)
-        {
-
+            loginThread.Start();
         }
 
         private void generalTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            TabPage selectedTab = generalTabControl.SelectedTab;
 
-            if (selectedTab == feedTabPage)
-            {
-                LoadFeedData();
-            }
-            else if (selectedTab == profileTabPage)
-            {
-                LoadProfileData();
-            }
-        }
-
-        private void likedPagesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //likedPagePicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
-
-        }
-
-
-        private void ShowLikedPageDetails(Page page)
-        {
-            LikedPageDetailsForm detailsForm = new LikedPageDetailsForm(page);
-            
-            detailsForm.ShowDialog(); // Show the popup as a dialog
-        }
-
-        private void favouriteTeamsListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //favouriteTeamPicture.ImageLocation = ((sender as ListBox).SelectedItem as Page).PictureSqaureURL;
         }
 
         private void logoutButton_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            // Check the user's response
             if (result == DialogResult.Yes)
             {
-                // Perform the logout operation
                 PerformLogout();
             }
         }
 
         private void PerformLogout()
         {
-            if (!string.IsNullOrEmpty(m_AppSettings.LastAccessToken))
-            {
-                   
-                // FacebookService.Logout();
-   
-                // Successfully logged out
-                ClearUserSession(); // Clear session and return to login screen
-            }
+           FacebookService.Logout();
+           ClearUserSession();
         }
 
 
         private void ClearUserSession()
         {
-            // Example logout logic: Show the login tab and hide others
-            HideTab(feedTabPage as TabPage);
-            HideTab(profileTabPage);
-            ShowTab(loginTabPage);
-
-            // Optionally, reset any other application state
+            AppSettings.Instance.RememberUser = false;
             MessageBox.Show("You have been logged out.", "Logout Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.rememberMeCheckbox.Checked = false;
+            this.m_LoginResult = null;
+            this.showOnlyLoginStage();
         }
 
-        private void likedPagesListBox_DoubleClick(object sender, EventArgs e)
+        private void showOnlyLoginStage()
         {
-            Page selectedPage = (sender as ListBox).SelectedItem as Page;
-            ShowLikedPageDetails(selectedPage);
+            HideTab(feedTabPage);
+            HideTab(profileTabPage);
+            this.MinimumSize = new Size(0, 0);
+            this.Size = SizeOnLoginTab;
+            this.CenterToScreen();
+            this.MaximizeBox = false;
+            lockFormSize();
+            ShowTab(loginTabPage);
+            this.generalTabControl.SelectedTab = loginTabPage;
+
         }
 
-        private void pictureBoxProfile_Click(object sender, EventArgs e)
+        private void CreateFeedTab()
         {
-
-        }
-
-        public void CreateFeedTab()
-        {
-            // Instantiate the UserControl for the Feed tab
             FeedTab feedTab = new FeedTab();
-
-            // Create a new TabPage and set its properties
+            feedTab.loadDataToListboxes(m_LoginResult.LoggedInUser);
+            feedTab.PostsFacebookDataListBox.IsPictureSupported = false;
             TabPage feedTabPage = new TabPage(feedTab.Name);
             feedTabPage.Controls.Add(feedTab);
-
             this.feedTabPage = feedTabPage;
         }
 
+        private void rememberMeCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            AppSettings.Instance.RememberUser = rememberMeCheckbox.Checked;
+        }
     }
 }

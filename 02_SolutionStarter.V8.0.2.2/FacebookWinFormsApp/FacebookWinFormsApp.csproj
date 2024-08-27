@@ -73,6 +73,7 @@
     <Reference Include="FbGraphApiWrapper">
       <HintPath>..\FBApi\FbGraphApiWrapper.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
     </Reference>
@@ -103,26 +104,20 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="IFacebookTab.cs" />
-    <Compile Include="LikedPageDetailsForm.cs">
+    <Compile Include="MemeCreatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LikedPageDetailsForm.Designer.cs">
-      <DependentUpon>LikedPageDetailsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LoginForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <Compile Include="MemeCreatorForm.Designer.cs">
+      <DependentUpon>MemeCreatorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MyFeedTab.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ProfileForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="ProfilePageTab.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ProfileForm.Designer.cs">
-      <DependentUpon>ProfileForm.cs</DependentUpon>
+    <Compile Include="ProfilePageTab.Designer.cs">
+      <DependentUpon>ProfilePageTab.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,17 +127,14 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LikedPageDetailsForm.resx">
-      <DependentUpon>LikedPageDetailsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
+    <EmbeddedResource Include="MemeCreatorForm.resx">
+      <DependentUpon>MemeCreatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyFeedTab.resx">
       <DependentUpon>MyFeedTab.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ProfileForm.resx">
-      <DependentUpon>ProfileForm.cs</DependentUpon>
+    <EmbeddedResource Include="ProfilePageTab.resx">
+      <DependentUpon>ProfilePageTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
