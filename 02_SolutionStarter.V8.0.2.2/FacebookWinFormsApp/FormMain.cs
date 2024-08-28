@@ -16,14 +16,14 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         internal LoginResult LoginResult { get { return m_LoginResult; } }
         private Size m_MinimumSize = new Size(800, 800);
-        //public string FacebookAppId { get; } = "899084605365060";
-        public string FacebookAppId { get; } = "611392880818813";
+        public string FacebookAppId { get; } = "899084605365060";
+        //public string FacebookAppId { get; } = "611392880818813";
         public FormMain()
         {
             lockFormSize();
             AppSettings.Instance.LoadAppSettings();
             InitializeComponent();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 5;
+            FacebookWrapper.FacebookService.s_CollectionLimit = 20;
             AppSettings.Instance.RememberUser = false;
             //AppSettings.Instance.LastAccessToken = "EAAIsDv96un0BOZBjuEhvbXFZCDkTW5XVYaeZAV89I1ZCJweI4nuxaTiw93gKajAdaT4X2TmErpnlzhZCC7ZCUGZAf64XGGVHOPTiqpYY1aTedfWBCDKqWIZCCeaEMTlW4keZCz1nJTG2ZBHTCtSbm4jCh45wLCZBiIqPpZAPvrKYuAhqyLQZA1pfrDKLfZA4HwIzEMtM61MRrG7eMqZCl6ZCeO6unAZDZD";
             if (AppSettings.Instance.RememberUser)

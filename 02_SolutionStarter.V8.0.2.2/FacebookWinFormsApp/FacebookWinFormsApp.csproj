@@ -104,6 +104,12 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="IFacebookTab.cs" />
+    <Compile Include="LikedPageDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LikedPageDetailsForm.Designer.cs">
+      <DependentUpon>LikedPageDetailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MemeCreatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,12 @@
     </Compile>
     <Compile Include="MyFeedTab.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PicturesGallery.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PicturesGallery.Designer.cs">
+      <DependentUpon>PicturesGallery.cs</DependentUpon>
     </Compile>
     <Compile Include="ProfilePageTab.cs">
       <SubType>UserControl</SubType>
@@ -127,11 +139,17 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LikedPageDetailsForm.resx">
+      <DependentUpon>LikedPageDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MemeCreatorForm.resx">
       <DependentUpon>MemeCreatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MyFeedTab.resx">
       <DependentUpon>MyFeedTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PicturesGallery.resx">
+      <DependentUpon>PicturesGallery.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProfilePageTab.resx">
       <DependentUpon>ProfilePageTab.cs</DependentUpon>

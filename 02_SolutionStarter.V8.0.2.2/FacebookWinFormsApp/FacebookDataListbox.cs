@@ -55,6 +55,11 @@ namespace BasicFacebookFeatures
             }
         }
 
+        public void setName(string name)
+        {
+            this.category.Text = name;
+        }
+
 
         public void loadData()
         {
@@ -126,11 +131,11 @@ namespace BasicFacebookFeatures
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
             if (IsDataLoaded)
             {
-                string text = textBox1.Text.ToLower();
+                string text = searchTextBox.Text.ToLower();
                 if (text.Length > 0)
                 {
                     var filteredData = m_DataSource
@@ -160,5 +165,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+
+        
     }
 }
