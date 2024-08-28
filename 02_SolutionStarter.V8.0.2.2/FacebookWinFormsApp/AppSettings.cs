@@ -23,10 +23,13 @@ namespace BasicFacebookFeatures
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
 
+        public DateTime AccessTokenExpireDate { get; set; }
+
         private AppSettings() 
         {
             RememberUser = false;
             LastAccessToken = null;
+            AccessTokenExpireDate = DateTime.MinValue;
         }
 
         public void SaveAppSettings()

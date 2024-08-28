@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemeCreatorForm));
             this.MemePictureBox = new System.Windows.Forms.PictureBox();
             this.topMemeLabel = new System.Windows.Forms.Label();
             this.bottomMemeLabel = new System.Windows.Forms.Label();
@@ -48,10 +47,10 @@
             // 
             // MemePictureBox
             // 
-            this.MemePictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("MemePictureBox.BackgroundImage")));
             this.MemePictureBox.Location = new System.Drawing.Point(206, 23);
             this.MemePictureBox.Name = "MemePictureBox";
             this.MemePictureBox.Size = new System.Drawing.Size(400, 400);
+            this.MemePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.MemePictureBox.TabIndex = 0;
             this.MemePictureBox.TabStop = false;
             this.MemePictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.MemePictureBox_Paint);

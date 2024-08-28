@@ -39,12 +39,6 @@ namespace BasicFacebookFeatures
             InitializeComponent();
         }
 
-
-        private void FacebookDataListbox_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListBox senderAsListBox = sender as ListBox;
@@ -53,11 +47,6 @@ namespace BasicFacebookFeatures
             {
                 this.PictureBox.ImageLocation = selectedItem?.PictureSqaureURL;
             }
-        }
-
-        public void setName(string name)
-        {
-            this.category.Text = name;
         }
 
 
@@ -116,20 +105,6 @@ namespace BasicFacebookFeatures
         }
         */
 
-        private void PictureBox_Click(object sender, EventArgs e)
-        {
-            //TODO : Maybe expand (?)
-        }
-
-        private void loadDataButton_Click(object sender, EventArgs e)
-        {
-            loadData();
-        }
-
-        private void GroupBox_Enter(object sender, EventArgs e)
-        {
-
-        }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -140,18 +115,18 @@ namespace BasicFacebookFeatures
                 {
                     var filteredData = m_DataSource
                     .Where(item =>
-                         {
-                             var itemType = item.GetType();
-                             var nameProperty = itemType.GetProperty("Name");
+                    {
+                        var itemType = item.GetType();
+                        var nameProperty = itemType.GetProperty("Name");
 
-                             if (nameProperty != null)
-                             {
-                                 var nameValue = nameProperty.GetValue(item)?.ToString().ToLower();
-                                 return nameValue != null && nameValue.Contains(text);
-                             }
+                        if (nameProperty != null)
+                        {
+                            var nameValue = nameProperty.GetValue(item)?.ToString().ToLower();
+                            return nameValue != null && nameValue.Contains(text);
+                        }
 
-                            return false;
-                        })
+                        return false;
+                    })
                         .ToList();
 
                     ListBox.DataSource = filteredData;
@@ -160,12 +135,15 @@ namespace BasicFacebookFeatures
                 }
                 else
                 {
-                   ListBox.DataSource = m_DataSource;
+                    ListBox.DataSource = m_DataSource;
                     ListBox.DisplayMember = "Name";
                 }
             }
         }
 
-        
+        private void loadDataButton_Click(object sender, EventArgs e)
+        {
+            loadData();
+        }
     }
 }

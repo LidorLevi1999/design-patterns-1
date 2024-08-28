@@ -103,7 +103,6 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="IFacebookTab.cs" />
     <Compile Include="LikedPageDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>

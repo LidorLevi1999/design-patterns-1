@@ -73,35 +73,20 @@ namespace BasicFacebookFeatures
 
         private void postNewStatusButton_Click(object sender, EventArgs e)
         {
-            Thread postStatusThread = new Thread(() =>
-            {
                 try
                 {
                     this.postNewStatusButton.Enabled = false;
                     User.PostStatus(this.newStatusTextbox.Text);
-                    this.BeginInvoke((MethodInvoker)delegate
-                    {
-                        MessageBox.Show("Status posted successfully!");
-                    });
+                    MessageBox.Show("Status posted successfully!");
                 }
                 catch (Exception i_Exception)
                 {
-                    this.BeginInvoke((MethodInvoker)delegate
-                    {
-                        MessageBox.Show("Failed to post status: " + i_Exception.Message);
-                    });
+                    MessageBox.Show("Failed to post status: " + i_Exception.Message);
                 }
                 finally
                 {
-                    this.BeginInvoke((MethodInvoker)delegate
-                    {
-                        this.newStatusTextbox.Text = m_PlaceholderText;
-                    });
+                    this.newStatusTextbox.Text = m_PlaceholderText;
                 }
-            });
-
-            // Start the thread
-            postStatusThread.Start();
         }
 
         private void newStatusTextbox_TextChanged(object sender, EventArgs e)

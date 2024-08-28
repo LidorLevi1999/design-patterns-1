@@ -23,10 +23,10 @@ namespace BasicFacebookFeatures
             lockFormSize();
             AppSettings.Instance.LoadAppSettings();
             InitializeComponent();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 20;
-            AppSettings.Instance.RememberUser = false;
+            FacebookWrapper.FacebookService.s_CollectionLimit = 5;
+            //AppSettings.Instance.RememberUser = false;
             //AppSettings.Instance.LastAccessToken = "EAAIsDv96un0BOZBjuEhvbXFZCDkTW5XVYaeZAV89I1ZCJweI4nuxaTiw93gKajAdaT4X2TmErpnlzhZCC7ZCUGZAf64XGGVHOPTiqpYY1aTedfWBCDKqWIZCCeaEMTlW4keZCz1nJTG2ZBHTCtSbm4jCh45wLCZBiIqPpZAPvrKYuAhqyLQZA1pfrDKLfZA4HwIzEMtM61MRrG7eMqZCl6ZCeO6unAZDZD";
-            if (AppSettings.Instance.RememberUser)
+            if (AppSettings.Instance.RememberUser && AppSettings.Instance.AccessTokenExpireDate < DateTime.Now)
             {
                 Thread connectThread = new Thread(() =>
                 {
@@ -54,15 +54,19 @@ namespace BasicFacebookFeatures
 
         private void MainForm_OnFormClosing(object sender, EventArgs e)
         {
-            if (AppSettings.Instance.RememberUser && m_LoginResult != null)
-            {
-                AppSettings.Instance.LastAccessToken = m_LoginResult.AccessToken;
-                AppSettings.Instance.SaveAppSettings();
-            }
-            else
-            {
-                AppSettings.Instance.DeleteAppSettings();
-            }
+            this.Invoke(new Action(() => {
+
+                if (AppSettings.Instance.RememberUser && m_LoginResult != null)
+                {
+                    AppSettings.Instance.LastAccessToken = m_LoginResult.AccessToken;
+                    AppSettings.Instance.AccessTokenExpireDate = m_LoginResult.FacebookOAuthResult?.Expires ?? DateTime.MinValue;
+                    AppSettings.Instance.SaveAppSettings();
+                }
+                else
+                {
+                    AppSettings.Instance.DeleteAppSettings();
+                }
+            }));
         }
 
 
@@ -127,8 +131,6 @@ namespace BasicFacebookFeatures
         private void login()
         {
             AppSettings.Instance.RememberUser = rememberMeCheckbox.Checked;
-            Thread loginThread = new Thread(() =>
-            {
                 m_LoginResult = FacebookService.Login(
                     FacebookAppId,
                     "email",
@@ -155,9 +157,6 @@ namespace BasicFacebookFeatures
                 {
                     m_LoginResult = null;
                 }
-            });
-
-            loginThread.Start();
         }
 
         private void generalTabControl_SelectedIndexChanged(object sender, EventArgs e)
