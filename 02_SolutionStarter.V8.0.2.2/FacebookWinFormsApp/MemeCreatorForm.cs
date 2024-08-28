@@ -1,10 +1,15 @@
-﻿using System;
+﻿using CefSharp.DevTools.Page;
+using FacebookWrapper;
+using FacebookWrapper.ObjectModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,119 +18,146 @@ namespace BasicFacebookFeatures
 {
     public partial class MemeCreatorForm : Form
     {
-        private Label selectedLabel = null;
-
-        public MemeCreatorForm()
+        private string TopMemeText { get; set; } = String.Empty;
+        private string BottomMemeText { get; set; } = String.Empty;
+        private Color TopTextColor { get; set; } = Color.Black;
+        private Color BottomTextColor { get; set; } = Color.Black;
+        private readonly string r_DefaultFont = "Arial";
+        private User User { get; set; }
+        public MemeCreatorForm(Image selectedImage, User user)
         {
+            this.User = user;
             InitializeComponent();
-            setupLabels();
+            InitializeFontComboBoxesWithData();
+            setupPictureBox(selectedImage);
         }
 
-        private void setupLabels()
+        private void InitializeFontComboBoxesWithData()
         {
-            Label label1 = new Label { Text = "Top Text", AutoSize = false, Size = new Size(100, 30), Location = new Point(50, 50), BorderStyle = BorderStyle.FixedSingle };
-            Label label2 = new Label { Text = "Bottom Text", AutoSize = false, Size = new Size(100, 30), Location = new Point(50, 150), BorderStyle = BorderStyle.FixedSingle };
-
-            this.Controls.Add(label1);
-            this.Controls.Add(label2);
-
-            // Allow moving
-            label1.MouseDown += label_MouseDown;
-            label1.MouseMove += label_MouseMove;
-            label1.MouseUp += label_MouseUp;
-
-            label2.MouseDown += label_MouseDown;
-            label2.MouseMove += label_MouseMove;
-            label2.MouseUp += label_MouseUp;
-
-            // Double-click to edit text
-            label1.DoubleClick += label_DoubleClick;
-            label2.DoubleClick += label_DoubleClick;
-
-            // Allow resizing
-            label1.MouseDown += label_MouseDownForResize;
-            label1.MouseMove += label_MouseMoveForResize;
-            label1.MouseUp += label_MouseUpForResize;
-
-            label2.MouseDown += label_MouseDownForResize;
-            label2.MouseMove += label_MouseMoveForResize;
-            label2.MouseUp += label_MouseUpForResize;
-        }
-
-        // Methods to move the labels
-        private Point mouseDownLocation;
-        private void label_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
+            topMemeTextFontComboBox.DisplayMember = "Name";
+            bottomMemeTextFontComboBox.DisplayMember = "Name";
+            foreach (var fontFamily in FontFamily.Families)
             {
-                mouseDownLocation = e.Location;
+                topMemeTextFontComboBox.Items.Add(fontFamily);
+                bottomMemeTextFontComboBox.Items.Add(fontFamily);
+            }
+
+            topMemeTextFontComboBox.SelectedIndex = 0;
+            bottomMemeTextFontComboBox.SelectedIndex = 0;
+        }
+
+        private void setupPictureBox(Image selectedImage)
+        {
+            this.MemePictureBox.Image = selectedImage;
+        }
+
+        private void bottomTextInputBox_TextChanged(object sender, EventArgs e)
+        {
+            this.BottomMemeText = bottomTextInputBox.Text;
+            MemePictureBox.Invalidate();
+        }
+
+        private void topTextInputBox_TextChanged(object sender, EventArgs e)
+        {
+            this.TopMemeText = topTextInputBox.Text;
+            MemePictureBox.Invalidate();
+        }
+
+        private void MemePictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            var imageSize = MemePictureBox.Image.Size;
+            string topFontName = topMemeTextFontComboBox.SelectedItem?.ToString() ?? r_DefaultFont;
+            string bottomFontName = bottomMemeTextFontComboBox.SelectedItem?.ToString() ?? r_DefaultFont;
+            using (Font topFont = new Font(topFontName, 24, FontStyle.Bold))
+            using (Font bottomFont = new Font(bottomFontName, 24, FontStyle.Bold))
+            {
+                DrawCenteredText(g, TopMemeText, topFont, TopTextColor, imageSize, true);
+                DrawCenteredText(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
             }
         }
 
-        private void label_MouseMove(object sender, MouseEventArgs e)
+        private void DrawCenteredText(Graphics g, string text, Font font, Color color, Size imageSize, bool isTopText)
         {
-            if (e.Button == MouseButtons.Left && sender is Label label)
+            using (Brush brush = new SolidBrush(color))
             {
-                label.Left += e.X - mouseDownLocation.X;
-                label.Top += e.Y - mouseDownLocation.Y;
-            }
-        }
+                SizeF textSize = g.MeasureString(text, font);
+                float x;
 
-        private void label_MouseUp(object sender, MouseEventArgs e)
-        {
-            selectedLabel = sender as Label;
-        }
+                // Adjust initial x position based on text length and shift it left by 20 pixels
+                x = (imageSize.Width - textSize.Width) / 2 - 30;
 
-        // Methods to resize the labels
-        private bool resizing = false;
-        private void label_MouseDownForResize(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                resizing = true;
-                selectedLabel = sender as Label;
-            }
-        }
-
-        private void label_MouseMoveForResize(object sender, MouseEventArgs e)
-        {
-            if (resizing && selectedLabel != null)
-            {
-                selectedLabel.Width += e.X;
-                selectedLabel.Height += e.Y;
-            }
-        }
-
-        private void label_MouseUpForResize(object sender, MouseEventArgs e)
-        {
-            resizing = false;
-        }
-
-        // Method to edit label text
-        private void label_DoubleClick(object sender, EventArgs e)
-        {
-            if (sender is Label label)
-            {
-                string newText = Microsoft.VisualBasic.Interaction.InputBox("Enter new text:", "Edit Text", label.Text);
-                if (!string.IsNullOrEmpty(newText))
+                if (isTopText)
                 {
-                    label.Text = newText;
+
+                    float y = 20; 
+                    g.DrawString(text, font, brush, new PointF(x, y));
+                }
+                else
+                {
+                    float y = 340;
+                    g.DrawString(text, font, brush, new PointF(x, y));
                 }
             }
         }
 
-        // Method to save the meme as an image
-        private void saveMemeButton_Click(object sender, EventArgs e)
+
+
+        private void colorPickerMemeTopTextButton_Click(object sender, EventArgs e)
         {
-            using (Bitmap bmp = new Bitmap(this.Width, this.Height))
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                this.DrawToBitmap(bmp, new Rectangle(0, 0, bmp.Width, bmp.Height));
-                bmp.Save("meme.png", ImageFormat.Png);
+                TopTextColor = colorDialog.Color;
+                MemePictureBox.Invalidate();
             }
         }
 
+        private void colorPickerMemeBottomTextButton_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                BottomTextColor = colorDialog.Color;
+                MemePictureBox.Invalidate();
+            }
+        }
 
+        private void topMemeTextFontComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MemePictureBox.Invalidate();
+        }
 
+        private void bottomMemeTextFontComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            MemePictureBox.Invalidate();
+        }
+
+        private void uploadMeme_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 1. Capture the current image from the PictureBox
+                var memeImage = new Bitmap(MemePictureBox.Width, MemePictureBox.Height);
+                MemePictureBox.DrawToBitmap(memeImage, new Rectangle(0, 0, MemePictureBox.Width, MemePictureBox.Height));
+
+                // 2. Save the image to the disk in the same application location
+                string filePath = Path.Combine(Application.StartupPath, "meme.png");
+                memeImage.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+
+                // 3. Upload the image using User.PostPhoto
+                User.PostPhoto(filePath);
+
+                MessageBox.Show("Meme uploaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // 4. Close the form after uploading
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
 }

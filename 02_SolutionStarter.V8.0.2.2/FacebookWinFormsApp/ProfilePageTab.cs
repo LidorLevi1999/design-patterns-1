@@ -124,9 +124,8 @@ namespace BasicFacebookFeatures
                     Image selectedImage = Image.FromFile(openFileDialog.FileName);
 
                     // Create a new MemeCreatorForm and pass the selected image
-                    MemeCreatorForm memeCreatorForm = new MemeCreatorForm();
+                    MemeCreatorForm memeCreatorForm = new MemeCreatorForm(selectedImage, User);
                     memeCreatorForm.StartPosition = FormStartPosition.CenterScreen;
-                    memeCreatorForm.BackgroundImage = selectedImage;
                     memeCreatorForm.BackgroundImageLayout = ImageLayout.Stretch;
                     memeCreatorForm.ShowDialog(); // Show the form as a modal dialog
                 }
