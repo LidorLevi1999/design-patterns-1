@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.GroupBox = new System.Windows.Forms.GroupBox();
-            this.category = new System.Windows.Forms.Label();
+            this.CategoryTextLabel = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.loadDataButton = new System.Windows.Forms.Button();
             this.PictureBox = new System.Windows.Forms.PictureBox();
@@ -44,7 +44,7 @@
             this.GroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBox.Controls.Add(this.category);
+            this.GroupBox.Controls.Add(this.CategoryTextLabel);
             this.GroupBox.Controls.Add(this.searchTextBox);
             this.GroupBox.Controls.Add(this.loadDataButton);
             this.GroupBox.Controls.Add(this.PictureBox);
@@ -57,12 +57,12 @@
             // 
             // category
             // 
-            this.category.AutoSize = true;
-            this.category.Location = new System.Drawing.Point(6, 2);
-            this.category.Name = "category";
-            this.category.Size = new System.Drawing.Size(48, 13);
-            this.category.TabIndex = 4;
-            this.category.Text = "category";
+            this.CategoryTextLabel.AutoSize = true;
+            this.CategoryTextLabel.Location = new System.Drawing.Point(6, 2);
+            this.CategoryTextLabel.Name = "category";
+            this.CategoryTextLabel.Size = new System.Drawing.Size(48, 13);
+            this.CategoryTextLabel.TabIndex = 4;
+            this.CategoryTextLabel.Text = "category";
             // 
             // searchTextBox
             // 
@@ -129,6 +129,6 @@
         internal System.Windows.Forms.PictureBox PictureBox;
         private System.Windows.Forms.Button loadDataButton;
         private System.Windows.Forms.TextBox searchTextBox;
-        private System.Windows.Forms.Label category;
+        private System.Windows.Forms.Label CategoryTextLabel;
     }
 }

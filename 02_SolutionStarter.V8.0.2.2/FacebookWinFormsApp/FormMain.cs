@@ -11,33 +11,27 @@ namespace BasicFacebookFeatures
     public partial class FormMain : Form
     {
         private Screen CurrentScreen { get; set; }
-
         private Size SizeOnLoginTab { get; } = new Size(682, 408);
         private LoginResult m_LoginResult;
         internal LoginResult LoginResult { get { return m_LoginResult; } }
         private Size m_MinimumSize = new Size(800, 800);
         public string FacebookAppId { get; } = "899084605365060";
-        //public string FacebookAppId { get; } = "611392880818813";
         public FormMain()
         {
+            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
             lockFormSize();
             AppSettings.Instance.LoadAppSettings();
             InitializeComponent();
-            FacebookWrapper.FacebookService.s_CollectionLimit = 5;
-            //AppSettings.Instance.RememberUser = false;
-            //AppSettings.Instance.LastAccessToken = "EAAIsDv96un0BOZBjuEhvbXFZCDkTW5XVYaeZAV89I1ZCJweI4nuxaTiw93gKajAdaT4X2TmErpnlzhZCC7ZCUGZAf64XGGVHOPTiqpYY1aTedfWBCDKqWIZCCeaEMTlW4keZCz1nJTG2ZBHTCtSbm4jCh45wLCZBiIqPpZAPvrKYuAhqyLQZA1pfrDKLfZA4HwIzEMtM61MRrG7eMqZCl6ZCeO6unAZDZD";
             if (AppSettings.Instance.RememberUser && AppSettings.Instance.AccessTokenExpireDate < DateTime.Now)
             {
                 Thread connectThread = new Thread(() =>
                 {
                     m_LoginResult = FacebookService.Connect(AppSettings.Instance.LastAccessToken);
-
                     if (m_LoginResult.LoggedInUser != null)
                     {
                         this.Invoke((MethodInvoker)initializeCustomTabs);
                     }
                 });
-
                 connectThread.Start();
             }
         }
@@ -69,23 +63,22 @@ namespace BasicFacebookFeatures
             }));
         }
 
-
-
         private void initializeCustomTabs()
         {
-            this.CreateFeedTab();
+            this.createFeedTab();
             this.createProfilePageTab();
             this.initTabControl();
-            HideTab(loginTabPage);
+            this.HideTab(loginTabPage);
             this.expandAndLockFormSize();
         }
 
         private void expandAndLockFormSize()
         {
+            Screen currentScreen = Screen.FromControl(this);
+
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.Location = new Point(0, 20);
             this.MaximizeBox = true;
-            Screen currentScreen = Screen.FromControl(this);
             this.Size = currentScreen.Bounds.Size;
             this.MinimumSize = this.m_MinimumSize;
         }
@@ -100,22 +93,20 @@ namespace BasicFacebookFeatures
         private void createProfilePageTab()
         {
             ProfilePageTab profileTabPage = new ProfilePageTab();
+
             profileTabPage.loadProfileData(m_LoginResult.LoggedInUser);
             profileTabPage.LogoutButtonClicked += profileTabPage_LogoutButtonClicked;
-
             this.profileTabPage = new TabPage("My Profile");
             this.profileTabPage.Controls.Add(profileTabPage);
         }
 
         private void profileTabPage_LogoutButtonClicked(object sender, EventArgs e)
         {
-            // Handle the logout logic here in the MainForm
-            var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dialogResult = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-            // Check the user's response
-            if (result == DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes)
             {
-                PerformLogout();
+                performLogout();
             }
         }
 
@@ -123,16 +114,15 @@ namespace BasicFacebookFeatures
         {
             if (m_LoginResult == null)
             {
-                Clipboard.SetText("lidorlevi1999@gmail.com");
                 login();
             }
         }
 
+
         private void login()
         {
-            AppSettings.Instance.RememberUser = rememberMeCheckbox.Checked;
-                m_LoginResult = FacebookService.Login(
-                    FacebookAppId,
+            string[] appPermissions =
+            {
                     "email",
                     "public_profile",
                     "user_age_range",
@@ -147,41 +137,28 @@ namespace BasicFacebookFeatures
                     "user_photos",
                     "user_posts",
                     "user_videos"
-                );
+            };
 
-                if (m_LoginResult.LoggedInUser != null)
-                {
-                    this.Invoke((MethodInvoker)initializeCustomTabs);
-                }
-                else
-                {
-                    m_LoginResult = null;
-                }
-        }
-
-        private void generalTabControl_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void logoutButton_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show("Are you sure you want to logout?", "Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
+            AppSettings.Instance.RememberUser = rememberMeCheckbox.Checked;
+            m_LoginResult = FacebookService.Login(FacebookAppId, appPermissions);
+            if (m_LoginResult.LoggedInUser != null)
             {
-                PerformLogout();
+                this.Invoke((MethodInvoker)initializeCustomTabs);
+            }
+            else
+            {
+                m_LoginResult = null;
             }
         }
 
-        private void PerformLogout()
+        private void performLogout()
         {
            FacebookService.Logout();
-           ClearUserSession();
+           clearUserSession();
         }
 
 
-        private void ClearUserSession()
+        private void clearUserSession()
         {
             AppSettings.Instance.RememberUser = false;
             MessageBox.Show("You have been logged out.", "Logout Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -192,24 +169,25 @@ namespace BasicFacebookFeatures
 
         private void showOnlyLoginStage()
         {
-            HideTab(feedTabPage);
-            HideTab(profileTabPage);
+            this.HideTab(feedTabPage);
+            this.HideTab(profileTabPage);
             this.MinimumSize = new Size(0, 0);
             this.Size = SizeOnLoginTab;
             this.CenterToScreen();
             this.MaximizeBox = false;
-            lockFormSize();
-            ShowTab(loginTabPage);
+            this.lockFormSize();
+            this.ShowTab(loginTabPage);
             this.generalTabControl.SelectedTab = loginTabPage;
-
         }
 
-        private void CreateFeedTab()
+        private void createFeedTab()
         {
             FeedTab feedTab = new FeedTab();
+
             feedTab.loadDataToListboxes(m_LoginResult.LoggedInUser);
             feedTab.PostsFacebookDataListBox.IsPictureSupported = false;
             TabPage feedTabPage = new TabPage(feedTab.Name);
+
             feedTabPage.Controls.Add(feedTab);
             this.feedTabPage = feedTabPage;
         }

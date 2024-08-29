@@ -105,7 +105,6 @@ namespace BasicFacebookFeatures
             this.generalTabControl.SelectedIndex = 0;
             this.generalTabControl.Size = new System.Drawing.Size(666, 369);
             this.generalTabControl.TabIndex = 54;
-            this.generalTabControl.SelectedIndexChanged += new System.EventHandler(this.generalTabControl_SelectedIndexChanged);
             // 
             // FormMain
             // 

@@ -14,10 +14,7 @@ namespace BasicFacebookFeatures
         internal bool IsDataLoaded { get; private set; } = false;
         internal List<object> m_DataSource { get; private set; }
         internal string DisplayMemeber { get; set; } = "";
-
         private bool m_IsPictureSupported = true;
-
-        private object m_DataSourceLock = new object();
         private System.Windows.Forms.Timer m_LoadingTimer = new System.Windows.Forms.Timer();
         internal bool IsPictureSupported
         {
@@ -34,7 +31,6 @@ namespace BasicFacebookFeatures
                 }
             }
         }
-
         private int m_CurrentLoadIndex = 0;
         private const int k_LoadChunkSize = 3;
 
@@ -47,6 +43,7 @@ namespace BasicFacebookFeatures
         {
             ListBox senderAsListBox = sender as ListBox;
             Page selectedItem = senderAsListBox.SelectedItem as Page;
+
             if (this.IsPictureSupported)
             {
                 this.PictureBox.ImageLocation = selectedItem?.PictureSqaureURL;
@@ -54,22 +51,23 @@ namespace BasicFacebookFeatures
         }
 
 
-        public void loadData()
+        public void LoadData()
         {
-            // Initialize and start the timer for loading data in chunks
             if (!IsDataLoaded)
             {
                 this.IsDataLoaded = true;
                 this.m_CurrentLoadIndex = 0;
-                m_LoadingTimer = new System.Windows.Forms.Timer(); // Use Forms Timer
-                m_LoadingTimer.Interval = 30; // Interval in milliseconds
+                int intervalInMilliseconds = 30;
+
+                m_LoadingTimer = new System.Windows.Forms.Timer(); 
+                m_LoadingTimer.Interval = intervalInMilliseconds; 
                 m_LoadingTimer.Tick += onLoadDataChunk;
                 m_LoadingTimer.Start();
                 this.ListBox.DisplayMember = DisplayMemeber;
             }
         }
 
-        public void setDataSource(object[] i_DataSource)
+        public void SetDataSource(object[] i_DataSource)
         {
             this.m_DataSource = i_DataSource.ToList();
             this.ListBox.DisplayMember = DisplayMemeber;
@@ -79,12 +77,13 @@ namespace BasicFacebookFeatures
         {
             loadChunkData();
         }
+
         private void loadChunkData()
         {
             int itemsToLoad = Math.Min(k_LoadChunkSize, m_DataSource.Count - m_CurrentLoadIndex);
+
             if (itemsToLoad > 0)
             {
-                // Create or get the list of currently displayed items
                 List<object> currentItems = ListBox.DataSource as List<object> ?? new List<object>();
 
                 for (int i = 0; i < itemsToLoad; i++)
@@ -92,12 +91,9 @@ namespace BasicFacebookFeatures
                     currentItems.Add(m_DataSource[m_CurrentLoadIndex++]);
                 }
 
-                // Update the DataSource
                 ListBox.DataSource = null;
                 ListBox.DataSource = currentItems;
                 this.ListBox.DisplayMember = DisplayMemeber;
-
-
                 if (m_CurrentLoadIndex >= m_DataSource.Count)
                 {
                     m_LoadingTimer.Stop();
@@ -109,20 +105,22 @@ namespace BasicFacebookFeatures
         }
 
 
-        public void setName(string name)
+        public void SetName(string name)
         {
-            this.category.Text = name;
+            this.CategoryTextLabel.Text = name;
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
             string displayMember = ListBox.DisplayMember;
+
             if (IsDataLoaded)
             {
                 string text = searchTextBox.Text.ToLower();
+
                 if (text.Length > 0)
                 {
-                    var filteredData = m_DataSource
+                    List<object> filteredData = m_DataSource
                     .Where(item =>
                     {
                         var itemType = item.GetType();
@@ -136,7 +134,7 @@ namespace BasicFacebookFeatures
 
                         return false;
                     })
-                        .ToList();
+                    .ToList();
 
                     ListBox.DataSource = filteredData;
                 }
@@ -144,13 +142,14 @@ namespace BasicFacebookFeatures
                 {
                     ListBox.DataSource = m_DataSource;
                 }
+
                 ListBox.DisplayMember = DisplayMemeber;
             }
         }
 
         private void loadDataButton_Click(object sender, EventArgs e)
         {
-            loadData();
+            LoadData();
             this.ListBox.DisplayMember = DisplayMemeber;
         }
     }

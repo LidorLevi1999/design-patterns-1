@@ -8,6 +8,8 @@ namespace BasicFacebookFeatures
     public class AppSettings
     {
         private static AppSettings sr_Instance = null;
+
+        private string m_AppSettingsFileName = "appSettings.xml";
         public static AppSettings Instance
         {
             get
@@ -34,7 +36,7 @@ namespace BasicFacebookFeatures
 
         public void SaveAppSettings()
         {
-            string appSettingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appSettings.xml");
+            string appSettingsFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, m_AppSettingsFileName);
             bool doesAppSettingsFileExists = File.Exists(appSettingsFilePath);
             FileMode fileMode = doesAppSettingsFileExists ? FileMode.Truncate : FileMode.CreateNew;
 
@@ -68,6 +70,7 @@ namespace BasicFacebookFeatures
                 {
                     XmlSerializer appSettingsXmlSerializer = new XmlSerializer(typeof(AppSettings));
                     AppSettings loadedAppSettings = appSettingsXmlSerializer.Deserialize(stream) as AppSettings;
+
                     this.LastAccessToken = loadedAppSettings.LastAccessToken;
                     this.RememberUser = loadedAppSettings.RememberUser;
                 }

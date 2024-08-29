@@ -17,20 +17,20 @@ namespace BasicFacebookFeatures
             InitializeComponent();
         }
 
-        public void AddImages(List<string> imageUrls)
+        public void AddImages(List<string> i_ImageUrls)
         {
-            foreach (var url in imageUrls)
+            foreach (var url in i_ImageUrls)
             {
                 PictureBox picBox = new PictureBox
                 {
                     ImageLocation = url,
                     SizeMode = PictureBoxSizeMode.Zoom,
-                    Width = 200,  // Set appropriate size
+                    Width = 200,  
                     Height = 200,
-                    Margin = new Padding(10)  // Add some margin for spacing
+                    Margin = new Padding(10) 
                 };
 
-                galleryFlowLayoutPanel.Controls.Add(picBox); // Add PictureBox to the FlowLayoutPanel
+                galleryFlowLayoutPanel.Controls.Add(picBox); 
             }
         }
     }

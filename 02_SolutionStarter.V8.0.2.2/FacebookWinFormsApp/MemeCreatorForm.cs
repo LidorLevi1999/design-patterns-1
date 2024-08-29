@@ -24,12 +24,12 @@ namespace BasicFacebookFeatures
         private Color BottomTextColor { get; set; } = Color.Black;
         private readonly string r_DefaultFont = "Arial";
         private User User { get; set; }
-        public MemeCreatorForm(Image selectedImage, User user)
+        public MemeCreatorForm(Image i_SelectedImage, User i_User)
         {
-            this.User = user;
+            this.User = i_User;
             InitializeComponent();
             InitializeFontComboBoxesWithData();
-            setupPictureBox(selectedImage);
+            setupPictureBox(i_SelectedImage);
         }
 
         private void InitializeFontComboBoxesWithData()
@@ -46,21 +46,33 @@ namespace BasicFacebookFeatures
             bottomMemeTextFontComboBox.SelectedIndex = 0;
         }
 
-        private void setupPictureBox(Image selectedImage)
+        private void setupPictureBox(Image i_SelectedImage)
         {
-            this.MemePictureBox.Image = selectedImage;
+            this.MemePictureBox.Image = i_SelectedImage;
         }
 
         private void bottomTextInputBox_TextChanged(object sender, EventArgs e)
         {
-            this.BottomMemeText = bottomTextInputBox.Text;
-            MemePictureBox.Invalidate();
+            inputBoxTextChange(false);
         }
 
         private void topTextInputBox_TextChanged(object sender, EventArgs e)
         {
-            this.TopMemeText = topTextInputBox.Text;
-            MemePictureBox.Invalidate();
+            inputBoxTextChange(true);
+        }
+
+        private void inputBoxTextChange(bool i_IsTopTextInputBox)
+        {
+            if(i_IsTopTextInputBox)
+            {
+                this.TopMemeText = topTextInputBox.Text;
+            }
+            else
+            {
+                this.BottomMemeText = bottomTextInputBox.Text;
+            }
+
+            invalidateMemePictureBox();
         }
 
         private void MemePictureBox_Paint(object sender, PaintEventArgs e)
@@ -69,6 +81,7 @@ namespace BasicFacebookFeatures
             var imageSize = MemePictureBox.Image.Size;
             string topFontName = topMemeTextFontComboBox.SelectedItem?.ToString() ?? r_DefaultFont;
             string bottomFontName = bottomMemeTextFontComboBox.SelectedItem?.ToString() ?? r_DefaultFont;
+
             using (Font topFont = new Font(topFontName, 24, FontStyle.Bold))
             using (Font bottomFont = new Font(bottomFontName, 24, FontStyle.Bold))
             {
@@ -77,27 +90,16 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void DrawCenteredText(Graphics g, string text, Font font, Color color, Size imageSize, bool isTopText)
+        private void DrawCenteredText(Graphics i_Graphic, string i_Text, Font i_Font, Color i_Color, Size i_ImageSize, bool i_IsTopText)
         {
-            using (Brush brush = new SolidBrush(color))
+            using (Brush brush = new SolidBrush(i_Color))
             {
-                SizeF textSize = g.MeasureString(text, font);
-                float x;
+                SizeF textSize = i_Graphic.MeasureString(i_Text, i_Font);
+                float xAxis = (i_ImageSize.Width -textSize.Width) / 2 - 30;
+                float yAxis = i_IsTopText ? 20 : 340;
+                
+                i_Graphic.DrawString(i_Text, i_Font, brush, new PointF(xAxis, yAxis));
 
-                // Adjust initial x position based on text length and shift it left by 20 pixels
-                x = (imageSize.Width - textSize.Width) / 2 - 30;
-
-                if (isTopText)
-                {
-
-                    float y = 20; 
-                    g.DrawString(text, font, brush, new PointF(x, y));
-                }
-                else
-                {
-                    float y = 340;
-                    g.DrawString(text, font, brush, new PointF(x, y));
-                }
             }
         }
 
@@ -105,52 +107,62 @@ namespace BasicFacebookFeatures
 
         private void colorPickerMemeTopTextButton_Click(object sender, EventArgs e)
         {
-            ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                TopTextColor = colorDialog.Color;
-                MemePictureBox.Invalidate();
-            }
+            ColorPickerButtonClicked(true);
         }
 
         private void colorPickerMemeBottomTextButton_Click(object sender, EventArgs e)
         {
+            ColorPickerButtonClicked(false);
+        }
+
+        private void ColorPickerButtonClicked (bool i_IsTopText)
+        {
             ColorDialog colorDialog = new ColorDialog();
+
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
-                BottomTextColor = colorDialog.Color;
-                MemePictureBox.Invalidate();
+                if(i_IsTopText)
+                {
+                    TopTextColor = colorDialog.Color;
+                }
+                else
+                {
+                    BottomTextColor = colorDialog.Color;
+                }
+                invalidateMemePictureBox();
             }
+
+        }
+
+        private void invalidateMemePictureBox()
+        {
+            MemePictureBox.Invalidate();
         }
 
         private void topMemeTextFontComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MemePictureBox.Invalidate();
+            invalidateMemePictureBox();
         }
 
         private void bottomMemeTextFontComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            MemePictureBox.Invalidate();
+            invalidateMemePictureBox();
         }
 
         private void uploadMeme_Click(object sender, EventArgs e)
         {
+            string saveMemeFileName = "meme.png";
+
             try
             {
-                // 1. Capture the current image from the PictureBox
-                var memeImage = new Bitmap(MemePictureBox.Width, MemePictureBox.Height);
+                Bitmap memeImage = new Bitmap(MemePictureBox.Width, MemePictureBox.Height);
+
                 MemePictureBox.DrawToBitmap(memeImage, new Rectangle(0, 0, MemePictureBox.Width, MemePictureBox.Height));
-
-                // 2. Save the image to the disk in the same application location
-                string filePath = Path.Combine(Application.StartupPath, "meme.png");
+                string filePath = Path.Combine(Application.StartupPath, saveMemeFileName);
+                
                 memeImage.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
-
-                // 3. Upload the image using User.PostPhoto
                 User.PostPhoto(filePath);
-
                 MessageBox.Show("Meme uploaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // 4. Close the form after uploading
                 this.Close();
             }
             catch (Exception ex)

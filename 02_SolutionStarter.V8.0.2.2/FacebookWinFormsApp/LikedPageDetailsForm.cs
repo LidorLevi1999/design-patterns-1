@@ -14,12 +14,12 @@ namespace BasicFacebookFeatures
 {
     public partial class LikedPageDetailsForm : Form
     {
-        public LikedPageDetailsForm(Page page)
+        public LikedPageDetailsForm(Page i_Page)
         {
             InitializeComponent();
-            likedPageProfilePictureBox.ImageLocation = page.PictureSqaureURL;
-            likedPageName.Text = page.Name;
-            likedPageDescription.Text = page.Description;
+            likedPageProfilePictureBox.ImageLocation = i_Page.PictureSqaureURL;
+            likedPageName.Text = i_Page.Name;
+            likedPageDescription.Text = i_Page.Description;
             likedByNum.Text = string.Format("Liked by {0}!", 100);
         }
 
