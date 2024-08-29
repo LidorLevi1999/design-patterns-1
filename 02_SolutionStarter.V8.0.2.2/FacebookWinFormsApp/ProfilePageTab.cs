@@ -56,6 +56,7 @@ namespace BasicFacebookFeatures
         private void setPlaceholder(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;
+
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.Text = m_PlaceholderText;
