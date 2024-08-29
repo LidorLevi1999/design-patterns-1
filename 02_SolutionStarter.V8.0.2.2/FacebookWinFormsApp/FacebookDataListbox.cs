@@ -2,6 +2,7 @@
 using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using System.Timers;
 using System.Windows.Forms;
@@ -12,8 +13,12 @@ namespace BasicFacebookFeatures
     {
         internal bool IsDataLoaded { get; private set; } = false;
         internal List<object> m_DataSource { get; private set; }
+        internal string DisplayMemeber { get; set; } = "";
 
         private bool m_IsPictureSupported = true;
+
+        private object m_DataSourceLock = new object();
+        private System.Windows.Forms.Timer m_LoadingTimer = new System.Windows.Forms.Timer();
         internal bool IsPictureSupported
         {
             get
@@ -32,7 +37,6 @@ namespace BasicFacebookFeatures
 
         private int m_CurrentLoadIndex = 0;
         private const int k_LoadChunkSize = 3;
-        private System.Timers.Timer m_LoadingTimer;
 
         public FacebookDataListbox()
         {
@@ -52,62 +56,67 @@ namespace BasicFacebookFeatures
 
         public void loadData()
         {
-
             // Initialize and start the timer for loading data in chunks
             if (!IsDataLoaded)
             {
                 this.IsDataLoaded = true;
                 this.m_CurrentLoadIndex = 0;
-                m_LoadingTimer = new System.Timers.Timer(30); // Interval in milliseconds
-                m_LoadingTimer.Elapsed += onLoadDataChunk;
-                m_LoadingTimer.AutoReset = true;
-                m_LoadingTimer.Enabled = true;
+                m_LoadingTimer = new System.Windows.Forms.Timer(); // Use Forms Timer
+                m_LoadingTimer.Interval = 30; // Interval in milliseconds
+                m_LoadingTimer.Tick += onLoadDataChunk;
+                m_LoadingTimer.Start();
+                this.ListBox.DisplayMember = DisplayMemeber;
             }
         }
 
         public void setDataSource(object[] i_DataSource)
         {
             this.m_DataSource = i_DataSource.ToList();
+            this.ListBox.DisplayMember = DisplayMemeber;
         }
 
-        private void onLoadDataChunk(object sender, ElapsedEventArgs e)
+        private void onLoadDataChunk(object sender, EventArgs e)
         {
-            this.BeginInvoke((MethodInvoker)delegate
+            loadChunkData();
+        }
+        private void loadChunkData()
+        {
+            int itemsToLoad = Math.Min(k_LoadChunkSize, m_DataSource.Count - m_CurrentLoadIndex);
+            if (itemsToLoad > 0)
             {
-                List<object> batchItems = new List<object>();
+                // Create or get the list of currently displayed items
+                List<object> currentItems = ListBox.DataSource as List<object> ?? new List<object>();
 
-                int itemsToLoad = Math.Min(k_LoadChunkSize, m_DataSource.Count - m_CurrentLoadIndex);
-                if (itemsToLoad > 0)
+                for (int i = 0; i < itemsToLoad; i++)
                 {
-                    for (int i = 0; i < itemsToLoad; i++)
-                    {
-                        batchItems.Add(m_DataSource[m_CurrentLoadIndex++]);
-                    }
-
-                    ListBox.BeginUpdate(); // Suspend UI updates for performance
-                    ListBox.Items.AddRange(batchItems.ToArray());
-                    ListBox.EndUpdate(); // Resume UI updates
-
-                    if (m_CurrentLoadIndex >= m_DataSource.Count)
-                    {
-                        m_LoadingTimer.Stop();
-                        m_LoadingTimer.Dispose();
-                    }
+                    currentItems.Add(m_DataSource[m_CurrentLoadIndex++]);
                 }
-            });
+
+                // Update the DataSource
+                ListBox.DataSource = null;
+                ListBox.DataSource = currentItems;
+                this.ListBox.DisplayMember = DisplayMemeber;
+
+
+                if (m_CurrentLoadIndex >= m_DataSource.Count)
+                {
+                    m_LoadingTimer.Stop();
+                    m_LoadingTimer.Dispose();
+                    this.ListBox.DisplayMember = DisplayMemeber;
+
+                }
+            }
         }
 
-        /*
-        public void loadData(object[] i_DataSource)
+
+        public void setName(string name)
         {
-            this.IsDataLoaded = true;
-            this.ListBox.DataSource = i_DataSource;
+            this.category.Text = name;
         }
-        */
-
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
+            string displayMember = ListBox.DisplayMember;
             if (IsDataLoaded)
             {
                 string text = searchTextBox.Text.ToLower();
@@ -130,20 +139,19 @@ namespace BasicFacebookFeatures
                         .ToList();
 
                     ListBox.DataSource = filteredData;
-                    ListBox.DisplayMember = "Name";
-
                 }
                 else
                 {
                     ListBox.DataSource = m_DataSource;
-                    ListBox.DisplayMember = "Name";
                 }
+                ListBox.DisplayMember = DisplayMemeber;
             }
         }
 
         private void loadDataButton_Click(object sender, EventArgs e)
         {
             loadData();
+            this.ListBox.DisplayMember = DisplayMemeber;
         }
     }
 }

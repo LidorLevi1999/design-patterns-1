@@ -18,13 +18,12 @@ public partial class FeedTab : UserControl
     private Label labelPostsAfter;
     private Label labelPostsBefore;
     private Button logoutButton;
-    private BindingSource m_BindingSource;
+    private BindingSource m_BindingSource = new BindingSource();
 
     public FeedTab()
     {
         InitializeComponent();
         PostsFacebookDataListBox.IsPictureSupported = false;
-        PostsFacebookDataListBox.ListBox.DataSourceChanged += PostsFacebookDataListBox_DataSourceChanged;
         InitializeDatePickersForPosts();
     }
 
@@ -101,6 +100,8 @@ public partial class FeedTab : UserControl
             this.FavouriteTeamsFacebookDataListbox.Name = "FavouriteTeamsFacebookDataListbox";
             this.FavouriteTeamsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.FavouriteTeamsFacebookDataListbox.TabIndex = 3;
+            this.FavouriteTeamsFacebookDataListbox.setName("Favourite Teams");
+
             // 
             // PostsFacebookDataListBox
             // 
@@ -108,27 +109,32 @@ public partial class FeedTab : UserControl
             this.PostsFacebookDataListBox.Location = new System.Drawing.Point(358, 0);
             this.PostsFacebookDataListBox.Name = "PostsFacebookDataListBox";
             this.PostsFacebookDataListBox.Size = new System.Drawing.Size(328, 300);
+            this.PostsFacebookDataListBox.setName("My Posts");
             this.PostsFacebookDataListBox.TabIndex = 2;
-            // 
-            // LikedPageFacebookDataListbox
-            // 
-            this.LikedPageFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.LikedPageFacebookDataListbox.Location = new System.Drawing.Point(0, 0);
-            this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
-            this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-            this.LikedPageFacebookDataListbox.TabIndex = 1;
-            // 
-            // AlbumsFacebookDataListbox
-            // 
-            this.AlbumsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.AlbumsFacebookDataListbox.Location = new System.Drawing.Point(358, 300);
-            this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
-            this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-            this.AlbumsFacebookDataListbox.TabIndex = 4;
-            // 
-            // FeedTab
-            // 
-            this.AccessibleName = "feedTabPage";
+        // 
+        // LikedPageFacebookDataListbox
+        // 
+        this.LikedPageFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        this.LikedPageFacebookDataListbox.Location = new System.Drawing.Point(0, 0);
+        this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
+        this.LikedPageFacebookDataListbox.setName("Liked Pages");
+        this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+        this.LikedPageFacebookDataListbox.TabIndex = 1;
+        this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.LikedPageFacebookDataListbox_DoubleClick);
+
+        // 
+        // AlbumsFacebookDataListBox
+        // 
+        this.AlbumsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        this.AlbumsFacebookDataListbox.Location = new System.Drawing.Point(358, 300);
+        this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
+        this.AlbumsFacebookDataListbox.setName("My Albums");
+        this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+        this.AlbumsFacebookDataListbox.TabIndex = 4;
+        this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);            // 
+                                                                                                                                              // FeedTab
+                                                                                                                                              // 
+        this.AccessibleName = "feedTabPage";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.Controls.Add(this.labelPostsBefore);
             this.Controls.Add(this.labelPostsAfter);
@@ -156,15 +162,17 @@ public partial class FeedTab : UserControl
 
     internal void loadDataToListboxes(User i_LoggedInUser)
     {
+        this.LikedPageFacebookDataListbox.DisplayMemeber = "Name";
+        this.FavouriteTeamsFacebookDataListbox.DisplayMemeber = "Name";
+        this.PostsFacebookDataListBox.DisplayMemeber = "Message";
+        
         this.LikedPageFacebookDataListbox.setDataSource(i_LoggedInUser.LikedPages?.ToArray());
-        this.LikedPageFacebookDataListbox.ListBox.DisplayMember = "Name";
         this.FavouriteTeamsFacebookDataListbox.setDataSource(i_LoggedInUser.FavofriteTeams?.ToArray());
-        this.FavouriteTeamsFacebookDataListbox.ListBox.DisplayMember = "Name";
         this.PostsFacebookDataListBox.setDataSource(i_LoggedInUser.Posts?.ToArray());
         this.PostsFacebookDataListBox.IsPictureSupported = false;
         this.AlbumsFacebookDataListbox.setDataSource(i_LoggedInUser.Albums.ToArray());
         this.AlbumsFacebookDataListbox.IsPictureSupported = false;
-        
+
     }
 
 
@@ -221,35 +229,24 @@ public partial class FeedTab : UserControl
 
     private void ApplyDateFilterToPostListBox()
     {
+
         // Create a list to hold the filtered items
         var filteredPosts = new List<object>();
-
-        foreach (var item in PostsFacebookDataListBox.ListBox.Items)
+        foreach (var item in PostsFacebookDataListBox.m_DataSource?.ToArray() ?? new object[0])
         {
-            var post = item as Post; 
-
+            var post = item as FacebookWrapper.ObjectModel.Post;
             if (post != null && post.UpdateTime >= dateTimePickerPostsAfter.Value && post.UpdateTime <= dateTimePickerPostsBefore.Value)
             {
+                var after = post.UpdateTime;
+                var afterDP = dateTimePickerPostsAfter.Value;
+                var beforeDP = dateTimePickerPostsBefore.Value;
                 filteredPosts.Add(item);
             }
         }
 
-        if (filteredPosts.Count > 0)
-        {
-            // Update the BindingSource with the filtered data
-            m_BindingSource.DataSource = filteredPosts;
-
-            // Refresh the ListBox to reflect the changes
-            PostsFacebookDataListBox.ListBox.Refresh();
-        }
+        // Update the BindingSource with the filtered data
+        m_BindingSource.DataSource = filteredPosts;
+        PostsFacebookDataListBox.ListBox.DataSource = m_BindingSource;
+        PostsFacebookDataListBox.ListBox.Refresh();
     }
-
-
-    private void PostsFacebookDataListBox_DataSourceChanged(object sender, EventArgs e)
-    {
-        m_BindingSource.DataSource = PostsFacebookDataListBox.ListBox.DataSource;
-
-        ApplyDateFilterToPostListBox();
-    }
-
 }
