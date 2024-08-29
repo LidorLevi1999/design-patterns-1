@@ -8,7 +8,6 @@ namespace BasicFacebookFeatures
     public class AppSettings
     {
         private static AppSettings sr_Instance = null;
-
         private string m_AppSettingsFileName = "appSettings.xml";
         public static AppSettings Instance
         {

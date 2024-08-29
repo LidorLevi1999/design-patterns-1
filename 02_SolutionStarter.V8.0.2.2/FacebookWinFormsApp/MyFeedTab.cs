@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Threading;
 using FacebookWrapper.ObjectModel;
 using System.Collections.Generic;
+using System.IO;
 
 public partial class FeedTab : UserControl
 {
@@ -18,6 +19,7 @@ public partial class FeedTab : UserControl
     private Label labelPostsAfter;
     private Label labelPostsBefore;
     private Button logoutButton;
+    private Button myMemesButton;
     private BindingSource m_BindingSource = new BindingSource();
 
     public FeedTab()
@@ -50,6 +52,7 @@ public partial class FeedTab : UserControl
             this.PostsFacebookDataListBox = new BasicFacebookFeatures.FacebookDataListbox();
             this.LikedPageFacebookDataListbox = new BasicFacebookFeatures.FacebookDataListbox();
             this.AlbumsFacebookDataListbox = new BasicFacebookFeatures.FacebookDataListbox();
+            this.myMemesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // logoutButton
@@ -100,8 +103,6 @@ public partial class FeedTab : UserControl
             this.FavouriteTeamsFacebookDataListbox.Name = "FavouriteTeamsFacebookDataListbox";
             this.FavouriteTeamsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.FavouriteTeamsFacebookDataListbox.TabIndex = 3;
-            this.FavouriteTeamsFacebookDataListbox.SetName("Favourite Teams");
-
             // 
             // PostsFacebookDataListBox
             // 
@@ -109,33 +110,39 @@ public partial class FeedTab : UserControl
             this.PostsFacebookDataListBox.Location = new System.Drawing.Point(358, 0);
             this.PostsFacebookDataListBox.Name = "PostsFacebookDataListBox";
             this.PostsFacebookDataListBox.Size = new System.Drawing.Size(328, 300);
-            this.PostsFacebookDataListBox.SetName("My Posts");
             this.PostsFacebookDataListBox.TabIndex = 2;
-        // 
-        // LikedPageFacebookDataListbox
-        // 
-        this.LikedPageFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-        this.LikedPageFacebookDataListbox.Location = new System.Drawing.Point(0, 0);
-        this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
-        this.LikedPageFacebookDataListbox.SetName("Liked Pages");
-        this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-        this.LikedPageFacebookDataListbox.TabIndex = 1;
-        this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.LikedPageFacebookDataListbox_DoubleClick);
-
-        // 
-        // AlbumsFacebookDataListBox
-        // 
-        this.AlbumsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-        this.AlbumsFacebookDataListbox.Location = new System.Drawing.Point(358, 300);
-        this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
-        this.AlbumsFacebookDataListbox.SetName("My Albums");
-        this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-        this.AlbumsFacebookDataListbox.TabIndex = 4;
-        this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);            // 
-                                                                                                                                              // FeedTab
-                                                                                                                                              // 
-        this.AccessibleName = "feedTabPage";
+            // 
+            // LikedPageFacebookDataListbox
+            // 
+            this.LikedPageFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.LikedPageFacebookDataListbox.Location = new System.Drawing.Point(0, 0);
+            this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
+            this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+            this.LikedPageFacebookDataListbox.TabIndex = 1;
+            // 
+            // AlbumsFacebookDataListbox
+            // 
+            this.AlbumsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AlbumsFacebookDataListbox.Location = new System.Drawing.Point(358, 300);
+            this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
+            this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+            this.AlbumsFacebookDataListbox.TabIndex = 4;
+            // 
+            // myMemesButton
+            // 
+            this.myMemesButton.Location = new System.Drawing.Point(665, 186);
+            this.myMemesButton.Name = "myMemesButton";
+            this.myMemesButton.Size = new System.Drawing.Size(200, 23);
+            this.myMemesButton.TabIndex = 9;
+            this.myMemesButton.Text = "Show My Memes";
+            this.myMemesButton.UseVisualStyleBackColor = true;
+            this.myMemesButton.Click += new System.EventHandler(this.myMemesButton_Click);
+            // 
+            // FeedTab
+            // 
+            this.AccessibleName = "feedTabPage";
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            this.Controls.Add(this.myMemesButton);
             this.Controls.Add(this.labelPostsBefore);
             this.Controls.Add(this.labelPostsAfter);
             this.Controls.Add(this.dateTimePickerPostsBefore);
@@ -241,5 +248,32 @@ public partial class FeedTab : UserControl
         m_BindingSource.DataSource = filteredPosts;
         PostsFacebookDataListBox.ListBox.DataSource = m_BindingSource;
         PostsFacebookDataListBox.ListBox.Refresh();
+    }
+
+    private void myMemesButton_Click(object sender, EventArgs e)
+    {
+        showAllUserMemes();
+    }
+
+    private void showAllUserMemes()
+    {
+        PicturesGallery picturesGallery = new PicturesGallery();
+        List<string> imageUrls = new List<string>();
+        string directoryOfMemesPath = Path.Combine(Application.StartupPath, MemeCreatorForm.m_MemesDiredtoryPath);
+
+        if (Directory.Exists(directoryOfMemesPath))
+        {
+            string[] memeFiles = Directory.GetFiles(directoryOfMemesPath);
+
+            foreach (var meme in memeFiles)
+            {
+                imageUrls.Add(meme);
+            }
+
+            picturesGallery.AddImages(imageUrls);
+        }
+
+        picturesGallery.Name = "Meme Gallery";
+        picturesGallery.ShowDialog();
     }
 }

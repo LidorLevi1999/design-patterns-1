@@ -18,6 +18,7 @@ namespace BasicFacebookFeatures
 {
     public partial class MemeCreatorForm : Form
     {
+        internal static string m_MemesDiredtoryPath = "memes";
         private string TopMemeText { get; set; } = String.Empty;
         private string BottomMemeText { get; set; } = String.Empty;
         private Color TopTextColor { get; set; } = Color.Black;
@@ -151,16 +152,24 @@ namespace BasicFacebookFeatures
 
         private void uploadMeme_Click(object sender, EventArgs e)
         {
-            string saveMemeFileName = "meme.png";
+            string timestampId = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString("X");
+            string saveMemeFileName = $@"{m_MemesDiredtoryPath}\meme_{timestampId}.png";
 
             try
             {
-                Bitmap memeImage = new Bitmap(MemePictureBox.Width, MemePictureBox.Height);
-
-                MemePictureBox.DrawToBitmap(memeImage, new Rectangle(0, 0, MemePictureBox.Width, MemePictureBox.Height));
+                string directoryPath = Path.Combine(Application.StartupPath, m_MemesDiredtoryPath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
                 string filePath = Path.Combine(Application.StartupPath, saveMemeFileName);
-                
-                memeImage.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+                using (Bitmap memeImage = new Bitmap(MemePictureBox.Width, MemePictureBox.Height))
+                {
+                    MemePictureBox.DrawToBitmap(memeImage, new Rectangle(0, 0, MemePictureBox.Width, MemePictureBox.Height));
+
+                    memeImage.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
+                }
+
                 User.PostPhoto(filePath);
                 MessageBox.Show("Meme uploaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
