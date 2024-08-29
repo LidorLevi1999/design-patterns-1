@@ -103,6 +103,8 @@ public partial class FeedTab : UserControl
             this.FavouriteTeamsFacebookDataListbox.Name = "FavouriteTeamsFacebookDataListbox";
             this.FavouriteTeamsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.FavouriteTeamsFacebookDataListbox.TabIndex = 3;
+            this.FavouriteTeamsFacebookDataListbox.SetName("Favourite teams");
+
             // 
             // PostsFacebookDataListBox
             // 
@@ -110,6 +112,7 @@ public partial class FeedTab : UserControl
             this.PostsFacebookDataListBox.Location = new System.Drawing.Point(358, 0);
             this.PostsFacebookDataListBox.Name = "PostsFacebookDataListBox";
             this.PostsFacebookDataListBox.Size = new System.Drawing.Size(328, 300);
+            this.PostsFacebookDataListBox.SetName("My posts");
             this.PostsFacebookDataListBox.TabIndex = 2;
             // 
             // LikedPageFacebookDataListbox
@@ -119,6 +122,10 @@ public partial class FeedTab : UserControl
             this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
             this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.LikedPageFacebookDataListbox.TabIndex = 1;
+            this.LikedPageFacebookDataListbox.SetName("Liked pages");
+            this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.LikedPageFacebookDataListbox_DoubleClick);
+
+
             // 
             // AlbumsFacebookDataListbox
             // 
@@ -127,6 +134,9 @@ public partial class FeedTab : UserControl
             this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
             this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.AlbumsFacebookDataListbox.TabIndex = 4;
+            this.AlbumsFacebookDataListbox.SetName("My albums");
+            this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);
+
             // 
             // myMemesButton
             // 
@@ -167,6 +177,7 @@ public partial class FeedTab : UserControl
         this.LikedPageFacebookDataListbox.DisplayMemeber = "Name";
         this.FavouriteTeamsFacebookDataListbox.DisplayMemeber = "Name";
         this.PostsFacebookDataListBox.DisplayMemeber = "Message";
+
         this.LikedPageFacebookDataListbox.SetDataSource(i_LoggedInUser.LikedPages?.ToArray());
         this.FavouriteTeamsFacebookDataListbox.SetDataSource(i_LoggedInUser.FavofriteTeams?.ToArray());
         this.PostsFacebookDataListBox.SetDataSource(i_LoggedInUser.Posts?.ToArray());
@@ -175,8 +186,6 @@ public partial class FeedTab : UserControl
         this.AlbumsFacebookDataListbox.IsPictureSupported = false;
 
     }
-
-
     private void LikedPageFacebookDataListbox_DoubleClick(object sender, EventArgs e)
     {
         ListBox senderAsListBox = sender as ListBox;
