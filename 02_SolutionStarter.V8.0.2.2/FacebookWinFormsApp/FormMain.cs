@@ -94,7 +94,7 @@ namespace BasicFacebookFeatures
         {
             ProfilePageTab profileTabPage = new ProfilePageTab();
 
-            profileTabPage.loadProfileData(m_LoginResult.LoggedInUser);
+            profileTabPage.LoadProfileData(m_LoginResult.LoggedInUser);
             profileTabPage.LogoutButtonClicked += profileTabPage_LogoutButtonClicked;
             this.profileTabPage = new TabPage("My Profile");
             this.profileTabPage.Controls.Add(profileTabPage);

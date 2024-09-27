@@ -192,11 +192,11 @@ public partial class FeedTab : UserControl
         Page selectedItem = senderAsListBox.SelectedItem as Page;
         if (selectedItem != null)
         {
-                ShowLikedPageDetails(selectedItem);
+                showLikedPageDetails(selectedItem);
         }
     }
 
-    private void ShowLikedPageDetails(Page i_Page)
+    private void showLikedPageDetails(Page i_Page)
     {
         LikedPageDetailsForm detailsForm = new LikedPageDetailsForm(i_Page);
         detailsForm.ShowDialog(); 

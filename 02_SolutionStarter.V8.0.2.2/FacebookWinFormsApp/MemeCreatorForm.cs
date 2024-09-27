@@ -29,11 +29,11 @@ namespace BasicFacebookFeatures
         {
             this.User = i_User;
             InitializeComponent();
-            InitializeFontComboBoxesWithData();
+            initializeFontComboBoxesWithData();
             setupPictureBox(i_SelectedImage);
         }
 
-        private void InitializeFontComboBoxesWithData()
+        private void initializeFontComboBoxesWithData()
         {
             topMemeTextFontComboBox.DisplayMember = "Name";
             bottomMemeTextFontComboBox.DisplayMember = "Name";
@@ -86,12 +86,12 @@ namespace BasicFacebookFeatures
             using (Font topFont = new Font(topFontName, 24, FontStyle.Bold))
             using (Font bottomFont = new Font(bottomFontName, 24, FontStyle.Bold))
             {
-                DrawCenteredText(g, TopMemeText, topFont, TopTextColor, imageSize, true);
-                DrawCenteredText(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
+                drawCenteredText(g, TopMemeText, topFont, TopTextColor, imageSize, true);
+                drawCenteredText(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
             }
         }
 
-        private void DrawCenteredText(Graphics i_Graphic, string i_Text, Font i_Font, Color i_Color, Size i_ImageSize, bool i_IsTopText)
+        private void drawCenteredText(Graphics i_Graphic, string i_Text, Font i_Font, Color i_Color, Size i_ImageSize, bool i_IsTopText)
         {
             using (Brush brush = new SolidBrush(i_Color))
             {
@@ -108,15 +108,15 @@ namespace BasicFacebookFeatures
 
         private void colorPickerMemeTopTextButton_Click(object sender, EventArgs e)
         {
-            ColorPickerButtonClicked(true);
+            colorPickerButtonClicked(true);
         }
 
         private void colorPickerMemeBottomTextButton_Click(object sender, EventArgs e)
         {
-            ColorPickerButtonClicked(false);
+            colorPickerButtonClicked(false);
         }
 
-        private void ColorPickerButtonClicked (bool i_IsTopText)
+        private void colorPickerButtonClicked (bool i_IsTopText)
         {
             ColorDialog colorDialog = new ColorDialog();
 

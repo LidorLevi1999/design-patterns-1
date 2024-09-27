@@ -17,7 +17,7 @@ namespace BasicFacebookFeatures
             initializeNewStatusTextBox();
         }
 
-        public void loadProfileData(User i_User)
+        public void LoadProfileData(User i_User)
         {
             this.User = i_User;
             this.profileImage.ImageLocation = User.PictureNormalURL;
