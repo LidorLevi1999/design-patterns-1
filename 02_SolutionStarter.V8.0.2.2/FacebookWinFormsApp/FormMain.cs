@@ -187,7 +187,6 @@ namespace BasicFacebookFeatures
             feedTab.loadDataToListboxes(m_LoginResult.LoggedInUser);
             feedTab.PostsFacebookDataListBox.IsPictureSupported = false;
             TabPage feedTabPage = new TabPage(feedTab.Name);
-
             feedTabPage.Controls.Add(feedTab);
             this.feedTabPage = feedTabPage;
         }

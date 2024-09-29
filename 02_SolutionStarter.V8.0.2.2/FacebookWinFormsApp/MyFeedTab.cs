@@ -27,8 +27,16 @@ public partial class FeedTab : UserControl
         InitializeComponent();
         PostsFacebookDataListBox.IsPictureSupported = false;
         initializeDatePickersForPosts();
+        initalizeFacebookDataListbox();
     }
 
+    private void initalizeFacebookDataListbox()
+    {
+        this.AlbumsFacebookDataListbox.SetName("Albums");
+        this.LikedPageFacebookDataListbox.SetName("Liked Pages");
+        this.FavouriteTeamsFacebookDataListbox.SetName("Favourite Teams");
+        this.PostsFacebookDataListBox.SetName("Posts");
+    }
     private void initializeDatePickersForPosts()
     {
         this.dateTimePickerPostsAfter.MinDate = new DateTime(2008, 1, 1);
@@ -48,11 +56,11 @@ public partial class FeedTab : UserControl
             this.dateTimePickerPostsBefore = new System.Windows.Forms.DateTimePicker();
             this.labelPostsAfter = new System.Windows.Forms.Label();
             this.labelPostsBefore = new System.Windows.Forms.Label();
+            this.myMemesButton = new System.Windows.Forms.Button();
             this.FavouriteTeamsFacebookDataListbox = new BasicFacebookFeatures.FacebookDataListbox();
             this.PostsFacebookDataListBox = new BasicFacebookFeatures.FacebookDataListbox();
             this.LikedPageFacebookDataListbox = new BasicFacebookFeatures.FacebookDataListbox();
             this.AlbumsFacebookDataListbox = new BasicFacebookFeatures.FacebookDataListbox();
-            this.myMemesButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // logoutButton
@@ -96,48 +104,6 @@ public partial class FeedTab : UserControl
             this.labelPostsBefore.TabIndex = 8;
             this.labelPostsBefore.Text = "Get all posts before:";
             // 
-            // FavouriteTeamsFacebookDataListbox
-            // 
-            this.FavouriteTeamsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.FavouriteTeamsFacebookDataListbox.Location = new System.Drawing.Point(0, 300);
-            this.FavouriteTeamsFacebookDataListbox.Name = "FavouriteTeamsFacebookDataListbox";
-            this.FavouriteTeamsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-            this.FavouriteTeamsFacebookDataListbox.TabIndex = 3;
-            this.FavouriteTeamsFacebookDataListbox.SetName("Favourite teams");
-
-            // 
-            // PostsFacebookDataListBox
-            // 
-            this.PostsFacebookDataListBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.PostsFacebookDataListBox.Location = new System.Drawing.Point(358, 0);
-            this.PostsFacebookDataListBox.Name = "PostsFacebookDataListBox";
-            this.PostsFacebookDataListBox.Size = new System.Drawing.Size(328, 300);
-            this.PostsFacebookDataListBox.SetName("My posts");
-            this.PostsFacebookDataListBox.TabIndex = 2;
-            // 
-            // LikedPageFacebookDataListbox
-            // 
-            this.LikedPageFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.LikedPageFacebookDataListbox.Location = new System.Drawing.Point(0, 0);
-            this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
-            this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-            this.LikedPageFacebookDataListbox.TabIndex = 1;
-            this.LikedPageFacebookDataListbox.SetName("Liked pages");
-            this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.LikedPageFacebookDataListbox_DoubleClick);
-
-
-            // 
-            // AlbumsFacebookDataListbox
-            // 
-            this.AlbumsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.AlbumsFacebookDataListbox.Location = new System.Drawing.Point(358, 300);
-            this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
-            this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
-            this.AlbumsFacebookDataListbox.TabIndex = 4;
-            this.AlbumsFacebookDataListbox.SetName("My albums");
-            this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);
-
-            // 
             // myMemesButton
             // 
             this.myMemesButton.Location = new System.Drawing.Point(665, 186);
@@ -147,6 +113,39 @@ public partial class FeedTab : UserControl
             this.myMemesButton.Text = "Show My Memes";
             this.myMemesButton.UseVisualStyleBackColor = true;
             this.myMemesButton.Click += new System.EventHandler(this.myMemesButton_Click);
+            // 
+            // FavouriteTeamsFacebookDataListbox
+            // 
+            this.FavouriteTeamsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.FavouriteTeamsFacebookDataListbox.Location = new System.Drawing.Point(0, 300);
+            this.FavouriteTeamsFacebookDataListbox.Name = "FavouriteTeamsFacebookDataListbox";
+            this.FavouriteTeamsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+            this.FavouriteTeamsFacebookDataListbox.TabIndex = 3;
+            // 
+            // PostsFacebookDataListBox
+            // 
+            this.PostsFacebookDataListBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.PostsFacebookDataListBox.Location = new System.Drawing.Point(358, 0);
+            this.PostsFacebookDataListBox.Name = "PostsFacebookDataListBox";
+            this.PostsFacebookDataListBox.Size = new System.Drawing.Size(328, 300);
+            this.PostsFacebookDataListBox.TabIndex = 2;
+            // 
+            // LikedPageFacebookDataListbox
+            // 
+            this.LikedPageFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.LikedPageFacebookDataListbox.Location = new System.Drawing.Point(0, 0);
+            this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
+            this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+            this.LikedPageFacebookDataListbox.TabIndex = 1;
+            // 
+            // AlbumsFacebookDataListbox
+            // 
+            this.AlbumsFacebookDataListbox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.AlbumsFacebookDataListbox.Location = new System.Drawing.Point(358, 300);
+            this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
+            this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
+            this.AlbumsFacebookDataListbox.TabIndex = 4;
+            this.AlbumsFacebookDataListbox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);
             // 
             // FeedTab
             // 
@@ -165,7 +164,7 @@ public partial class FeedTab : UserControl
             this.Location = new System.Drawing.Point(8, 51);
             this.Name = "FeedTab";
             this.Padding = new System.Windows.Forms.Padding(3);
-            this.Size = new System.Drawing.Size(1000, 600);
+            this.Size = new System.Drawing.Size(1200, 600);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -222,7 +221,6 @@ public partial class FeedTab : UserControl
                 picturesGallery.ShowDialog();
             }
             finally { }
-            
         }
     }
 
