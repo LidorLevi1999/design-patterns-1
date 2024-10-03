@@ -1,24 +1,14 @@
-﻿using CefSharp.DevTools.Page;
-using FacebookWrapper;
-using FacebookWrapper.ObjectModel;
+﻿using FacebookWrapper.ObjectModel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
 {
     public partial class MemeCreatorForm : Form
     {
-        internal static string m_MemesDiredtoryPath = "memes";
+        internal static string m_MemesDirectoryPath = "memes";
         private string TopMemeText { get; set; } = String.Empty;
         private string BottomMemeText { get; set; } = String.Empty;
         private Color TopTextColor { get; set; } = Color.Black;
@@ -153,11 +143,11 @@ namespace BasicFacebookFeatures
         private void uploadMeme_Click(object sender, EventArgs e)
         {
             string timestampId = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString("X");
-            string saveMemeFileName = $@"{m_MemesDiredtoryPath}\meme_{timestampId}.png";
+            string saveMemeFileName = $@"{m_MemesDirectoryPath}\meme_{timestampId}.png";
 
             try
             {
-                string directoryPath = Path.Combine(Application.StartupPath, m_MemesDiredtoryPath);
+                string directoryPath = Path.Combine(Application.StartupPath, m_MemesDirectoryPath);
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);

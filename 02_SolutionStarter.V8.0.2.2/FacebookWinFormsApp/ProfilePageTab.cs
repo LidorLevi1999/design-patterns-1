@@ -1,7 +1,6 @@
 ﻿using FacebookWrapper.ObjectModel;
 using System;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
@@ -9,7 +8,7 @@ namespace BasicFacebookFeatures
     internal partial class ProfilePageTab : UserControl
     {
         public event EventHandler LogoutButtonClicked;
-        private string m_PlaceholderText = "Whats on your mind ?";
+        private string m_PlaceholderText = "What's on your mind ?";
         private User User { get; set; }
         public ProfilePageTab()
         {

@@ -97,6 +97,14 @@
     <Compile Include="FacebookDataListbox.Designer.cs">
       <DependentUpon>FacebookDataListbox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FacebookDataLoader.cs" />
+    <Compile Include="FeedTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FeedTab.Designer.cs">
+      <DependentUpon>FeedTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FeedTabLogic.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,9 +122,6 @@
     </Compile>
     <Compile Include="MemeCreatorForm.Designer.cs">
       <DependentUpon>MemeCreatorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MyFeedTab.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="PicturesGallery.cs">
       <SubType>Form</SubType>
@@ -143,9 +148,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MemeCreatorForm.resx">
       <DependentUpon>MemeCreatorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MyFeedTab.resx">
-      <DependentUpon>MyFeedTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PicturesGallery.resx">
       <DependentUpon>PicturesGallery.cs</DependentUpon>
