@@ -3,18 +3,20 @@ using System.IO;
 using System.Linq;
 using FacebookWrapper.ObjectModel;
 using System.Windows.Forms;
+using System.Threading;
+using System;
 
 namespace BasicFacebookFeatures
 {
-    internal class FeedTabLogic // internal class
+    internal class FeedTabLogic
     {
         private readonly FeedTab m_FeedTab;
-        private BindingSource m_BindingSource;
+        //private BindingSource m_BindingSource;
 
         public FeedTabLogic(FeedTab i_FeedTab)
         {
             m_FeedTab = i_FeedTab;
-            m_BindingSource = new BindingSource();
+            //m_BindingSource = new BindingSource();
         }
 
         public void LoadDataToListboxes(User i_LoggedInUser)
@@ -26,9 +28,9 @@ namespace BasicFacebookFeatures
             m_FeedTab.LikedPageFacebookDataListbox.m_DataLoader.SetDataSource(i_LoggedInUser.LikedPages?.ToArray());
             m_FeedTab.FavouriteTeamsFacebookDataListbox.m_DataLoader.SetDataSource(i_LoggedInUser.FavofriteTeams?.ToArray());
             m_FeedTab.PostsFacebookDataListBox.m_DataLoader.SetDataSource(i_LoggedInUser.Posts?.ToArray());
-            m_FeedTab.PostsFacebookDataListBox.m_DataLoader.IsPictureSupported = false;
+            m_FeedTab.PostsFacebookDataListBox.IsPictureSupported = false;
             m_FeedTab.AlbumsFacebookDataListbox.m_DataLoader.SetDataSource(i_LoggedInUser.Albums.ToArray());
-            m_FeedTab.AlbumsFacebookDataListbox.m_DataLoader.IsPictureSupported = false;
+            m_FeedTab.AlbumsFacebookDataListbox.IsPictureSupported = false;
         }
 
         public void ShowLikedPageDetails(object sender)
@@ -47,18 +49,32 @@ namespace BasicFacebookFeatures
         {
             ListBox senderAsListBox = sender as ListBox;
             Album selectedItem = senderAsListBox?.SelectedItem as Album;
-            PicturesGallery picturesGallery = new PicturesGallery();
-            List<string> imageUrls = new List<string>();
-
-            if (selectedItem != null)
+            if (selectedItem?.Count > 0)
             {
-                foreach (var picture in selectedItem.Photos)
-                {
-                    imageUrls.Add(picture.PictureNormalURL);
-                }
+                PicturesGallery picturesGallery = new PicturesGallery();
 
-                picturesGallery.AddImages(imageUrls);
-                picturesGallery.ShowDialog();
+                picturesGallery.Show();
+
+                new Thread(() =>
+                {
+                    List<string> imageUrls = new List<string>();
+
+                    foreach (var picture in selectedItem.Photos)
+                    {
+                        imageUrls.Add(picture.PictureNormalURL);
+                    }
+
+                    picturesGallery.Invoke((MethodInvoker)delegate
+                    {
+                        picturesGallery.AddImages(imageUrls);
+                    });
+
+                })
+                .Start(); 
+            }
+            else
+            {
+                MessageBox.Show($"Album {selectedItem?.Name} doesn't contains pictures");
             }
         }
 
@@ -76,9 +92,9 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            m_BindingSource.DataSource = filteredPosts;
-            m_FeedTab.PostsFacebookDataListBox.ListBox.DataSource = m_BindingSource;
-            m_FeedTab.PostsFacebookDataListBox.ListBox.Refresh();
+            //m_BindingSource.DataSource = filteredPosts;
+            //m_FeedTab.PostsFacebookDataListBox.ListBox.DataSource = m_BindingSource;
+            //m_FeedTab.PostsFacebookDataListBox.ListBox.Refresh();
         }
 
         public void ShowAllUserMemes()
@@ -89,14 +105,18 @@ namespace BasicFacebookFeatures
 
             if (Directory.Exists(directoryOfMemesPath))
             {
-                string[] memeFiles = Directory.GetFiles(directoryOfMemesPath);
-
-                foreach (var meme in memeFiles)
+                new Thread(() =>
                 {
-                    imageUrls.Add(meme);
-                }
+                    string[] memeFiles = Directory.GetFiles(directoryOfMemesPath);
 
-                picturesGallery.AddImages(imageUrls);
+                    foreach (var meme in memeFiles)
+                    {
+                        imageUrls.Add(meme);
+                    }
+
+                    picturesGallery.Invoke((MethodInvoker)(() => picturesGallery.AddImages(imageUrls)));
+                })
+                .Start();
             }
 
             picturesGallery.Name = "Meme Gallery";

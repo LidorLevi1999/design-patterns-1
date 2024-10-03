@@ -11,7 +11,7 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             m_Logic = new FeedTabLogic(this);
-            PostsFacebookDataListBox.m_DataLoader.IsPictureSupported = false;
+            PostsFacebookDataListBox.IsPictureSupported = false;
             initializeDatePickersForPosts();
             InitializeFacebookDataListbox();
         }
@@ -23,6 +23,12 @@ namespace BasicFacebookFeatures
             this.LikedPageFacebookDataListbox.SetName("Liked Pages");
             this.FavouriteTeamsFacebookDataListbox.SetName("Favorite Teams");
             this.PostsFacebookDataListBox.SetName("Posts");
+
+            this.LikedPageFacebookDataListbox.ListBox.DisplayMember = "Name";
+            this.FavouriteTeamsFacebookDataListbox.ListBox.DisplayMember = "Name";
+            this.PostsFacebookDataListBox.ListBox.DisplayMember = "Message";
+            this.AlbumsFacebookDataListbox.ListBox.DisplayMember = "Name";
+
         }
 
         private void initializeDatePickersForPosts()

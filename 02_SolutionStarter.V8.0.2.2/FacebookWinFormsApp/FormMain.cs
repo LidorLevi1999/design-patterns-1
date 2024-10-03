@@ -24,15 +24,14 @@ namespace BasicFacebookFeatures
             InitializeComponent();
             if (AppSettings.Instance.RememberUser && AppSettings.Instance.AccessTokenExpireDate < DateTime.Now)
             {
-                Thread connectThread = new Thread(() =>
+                new Thread(() =>
                 {
                     m_LoginResult = FacebookService.Connect(AppSettings.Instance.LastAccessToken);
                     if (m_LoginResult.LoggedInUser != null)
                     {
                         this.Invoke((MethodInvoker)initializeCustomTabs);
                     }
-                });
-                connectThread.Start();
+                }).Start();
             }
         }
 
@@ -114,7 +113,7 @@ namespace BasicFacebookFeatures
         {
             if (m_LoginResult == null)
             {
-                login();
+                new Thread(login).Start();
             }
         }
 
@@ -185,7 +184,7 @@ namespace BasicFacebookFeatures
             FeedTab feedTab = new FeedTab();
 
             feedTab.m_Logic.LoadDataToListboxes(m_LoginResult.LoggedInUser);
-            feedTab.PostsFacebookDataListBox.m_DataLoader.IsPictureSupported = false;
+            feedTab.PostsFacebookDataListBox.IsPictureSupported = false;
             TabPage feedTabPage = new TabPage(feedTab.Name);
             feedTabPage.Controls.Add(feedTab);
             this.feedTabPage = feedTabPage;

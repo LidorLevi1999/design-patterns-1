@@ -158,6 +158,7 @@
 using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
@@ -165,12 +166,28 @@ namespace BasicFacebookFeatures
     public partial class FacebookDataListbox : UserControl
     {
         internal FacebookDataLoader m_DataLoader;
-        //public string DisplayMember { get; set; } = "";
+        public string DisplayMember { get; set; } = "";
+        private bool m_IsPictureSupported = true;
+        internal bool IsPictureSupported
+        {
+            get
+            {
+                return m_IsPictureSupported;
+            }
+            set
+            {
+                m_IsPictureSupported = value;
+                if (m_IsPictureSupported == false)
+                {
+                    this.PictureBox.Visible = false;
+                }
+            }
+        }
 
         public FacebookDataListbox()
         {
             InitializeComponent();
-            m_DataLoader = new FacebookDataLoader();
+            m_DataLoader = new FacebookDataLoader(ListBox);
             m_DataLoader.OnDataLoaded += updateUIAfterDataLoad;
         }
 
@@ -179,7 +196,7 @@ namespace BasicFacebookFeatures
             ListBox senderAsListBox = sender as ListBox;
             Page selectedItem = senderAsListBox.SelectedItem as Page;
 
-            if (m_DataLoader.IsPictureSupported)
+            if (IsPictureSupported)
             {
                 this.PictureBox.ImageLocation = selectedItem?.PictureSqaureURL;
             }
@@ -187,12 +204,12 @@ namespace BasicFacebookFeatures
 
         private void loadDataButton_Click(object sender, EventArgs e)
         {
-            m_DataLoader.LoadData();
+            new Thread(m_DataLoader.LoadData).Start();
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            m_DataLoader.FilterData(searchTextBox.Text.ToLower());
+            //m_DataLoader.FilterData(searchTextBox.Text.ToLower());
         }
 
         private void updateUIAfterDataLoad(List<object> dataSource)
