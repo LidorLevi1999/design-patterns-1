@@ -209,13 +209,18 @@ namespace BasicFacebookFeatures
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            //m_DataLoader.FilterData(searchTextBox.Text.ToLower());
+            m_DataLoader.FilterData(searchTextBox.Text.ToLower());
         }
 
         private void updateUIAfterDataLoad(List<object> dataSource)
         {
-            this.ListBox.DataSource = dataSource;
-            this.ListBox.DisplayMember = m_DataLoader.DisplayMember;
+            new Thread(() =>
+            {
+                this.ListBox.Invoke(new Action(() =>
+                {
+                    this.ListBox.DataSource = dataSource;
+                }));
+            }).Start();
         }
 
         public void SetName(string name)

@@ -111,6 +111,13 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FriendsTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FriendsTab.Designer.cs">
+      <DependentUpon>FriendsTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FriendsTabLogic.cs" />
     <Compile Include="LikedPageDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,8 +147,14 @@
     <EmbeddedResource Include="FacebookDataListbox.resx">
       <DependentUpon>FacebookDataListbox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FeedTab.resx">
+      <DependentUpon>FeedTab.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FriendsTab.resx">
+      <DependentUpon>FriendsTab.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LikedPageDetailsForm.resx">
       <DependentUpon>LikedPageDetailsForm.cs</DependentUpon>
@@ -165,6 +178,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="FacebookWrapper.ObjectModel.Page.datasource" />
+    <None Include="FacebookWrapper.ObjectModel.User1.datasource" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

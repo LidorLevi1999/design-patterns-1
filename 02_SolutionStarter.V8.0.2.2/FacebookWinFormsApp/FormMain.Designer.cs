@@ -156,6 +156,7 @@ namespace BasicFacebookFeatures
         private TabPage loginTabPage;
         private TabPage feedTabPage;
         private TabPage profileTabPage;
+        private TabPage friendsTabPage;
         private Button buttonLogin;
         private TabControl generalTabControl;
         private Label introText;

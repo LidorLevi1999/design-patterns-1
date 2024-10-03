@@ -11,12 +11,12 @@ namespace BasicFacebookFeatures
     internal class FeedTabLogic
     {
         private readonly FeedTab m_FeedTab;
-        //private BindingSource m_BindingSource;
+        private BindingSource m_BindingSource;
 
         public FeedTabLogic(FeedTab i_FeedTab)
         {
             m_FeedTab = i_FeedTab;
-            //m_BindingSource = new BindingSource();
+            m_BindingSource = new BindingSource();
         }
 
         public void LoadDataToListboxes(User i_LoggedInUser)
@@ -92,9 +92,9 @@ namespace BasicFacebookFeatures
                 }
             }
 
-            //m_BindingSource.DataSource = filteredPosts;
-            //m_FeedTab.PostsFacebookDataListBox.ListBox.DataSource = m_BindingSource;
-            //m_FeedTab.PostsFacebookDataListBox.ListBox.Refresh();
+            m_BindingSource.DataSource = filteredPosts;
+            m_FeedTab.PostsFacebookDataListBox.ListBox.DataSource = m_BindingSource;
+            m_FeedTab.PostsFacebookDataListBox.ListBox.Refresh();
         }
 
         public void ShowAllUserMemes()

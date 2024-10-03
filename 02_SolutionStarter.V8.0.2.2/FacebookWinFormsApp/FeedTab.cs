@@ -44,14 +44,21 @@ namespace BasicFacebookFeatures
 
         private void dateTimePickerPostsBefore_ValueChanged(object sender, EventArgs e)
         {
-            dateTimePickerPostsAfter.MaxDate = dateTimePickerPostsBefore.Value;
-            m_Logic.ApplyDateFilterToPostListBox();
+            if (PostsFacebookDataListBox.m_DataLoader.IsDataLoaded)
+            {
+                dateTimePickerPostsAfter.MaxDate = dateTimePickerPostsBefore.Value;
+                m_Logic.ApplyDateFilterToPostListBox();
+            }
         }
 
         private void dateTimePickerPostsAfter_ValueChanged(object sender, EventArgs e)
         {
-            dateTimePickerPostsBefore.MinDate = dateTimePickerPostsAfter.Value;
-            m_Logic.ApplyDateFilterToPostListBox();
+            if (PostsFacebookDataListBox.m_DataLoader.IsDataLoaded)
+            {
+
+                dateTimePickerPostsBefore.MinDate = dateTimePickerPostsAfter.Value;
+                m_Logic.ApplyDateFilterToPostListBox();
+            }
         }
 
         private void LikedPageFacebookDataListbox_DoubleClick(object sender, EventArgs e)

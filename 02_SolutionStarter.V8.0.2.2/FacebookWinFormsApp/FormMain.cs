@@ -15,7 +15,7 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         internal LoginResult LoginResult { get { return m_LoginResult; } }
         private Size m_MinimumSize = new Size(800, 800);
-        public string FacebookAppId { get; } = "899084605365060";
+        public string FacebookAppId { get; } = "611392880818813";
         public FormMain()
         {
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
@@ -66,6 +66,7 @@ namespace BasicFacebookFeatures
         {
             this.createFeedTab();
             this.createProfilePageTab();
+            this.createFriendsPageTab();
             this.initTabControl();
             this.HideTab(loginTabPage);
             this.expandAndLockFormSize();
@@ -86,6 +87,7 @@ namespace BasicFacebookFeatures
         {
             this.generalTabControl.Controls.Add(this.profileTabPage);
             this.generalTabControl.Controls.Add(this.feedTabPage);
+            this.generalTabControl.Controls.Add(this.friendsTabPage);
             this.generalTabControl.SelectedTab = this.profileTabPage;
         }
 
@@ -189,6 +191,16 @@ namespace BasicFacebookFeatures
             feedTabPage.Controls.Add(feedTab);
             this.feedTabPage = feedTabPage;
         }
+
+        private void createFriendsPageTab()
+        {
+            FriendsTab friendsTab = new FriendsTab(m_LoginResult.LoggedInUser);
+            TabPage friendsTabPage = new TabPage("Friends");
+            friendsTabPage.Controls.Add(friendsTab);
+            
+            this.friendsTabPage = friendsTabPage;
+        }
+
 
         private void rememberMeCheckbox_CheckedChanged(object sender, EventArgs e)
         {
