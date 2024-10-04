@@ -25,9 +25,13 @@ namespace BasicFacebookFeatures
             this.PostsFacebookDataListBox.SetName("Posts");
 
             this.LikedPageFacebookDataListbox.ListBox.DisplayMember = "Name";
+            this.LikedPageFacebookDataListbox.DisplayMember = "Name";
             this.FavouriteTeamsFacebookDataListbox.ListBox.DisplayMember = "Name";
+            this.FavouriteTeamsFacebookDataListbox.DisplayMember = "Name";
             this.PostsFacebookDataListBox.ListBox.DisplayMember = "Message";
+            this.PostsFacebookDataListBox.DisplayMember = "Message";
             this.AlbumsFacebookDataListbox.ListBox.DisplayMember = "Name";
+            this.AlbumsFacebookDataListbox.DisplayMember = "Name";
 
         }
 
@@ -44,7 +48,7 @@ namespace BasicFacebookFeatures
 
         private void dateTimePickerPostsBefore_ValueChanged(object sender, EventArgs e)
         {
-            if (PostsFacebookDataListBox.m_DataLoader.IsDataLoaded)
+            if (PostsFacebookDataListBox.IsDataLoaded)
             {
                 dateTimePickerPostsAfter.MaxDate = dateTimePickerPostsBefore.Value;
                 m_Logic.ApplyDateFilterToPostListBox();
@@ -53,7 +57,7 @@ namespace BasicFacebookFeatures
 
         private void dateTimePickerPostsAfter_ValueChanged(object sender, EventArgs e)
         {
-            if (PostsFacebookDataListBox.m_DataLoader.IsDataLoaded)
+            if (PostsFacebookDataListBox.IsDataLoaded)
             {
 
                 dateTimePickerPostsBefore.MinDate = dateTimePickerPostsAfter.Value;

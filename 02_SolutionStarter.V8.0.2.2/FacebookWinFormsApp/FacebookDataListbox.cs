@@ -158,6 +158,7 @@
 using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -165,7 +166,8 @@ namespace BasicFacebookFeatures
 {
     public partial class FacebookDataListbox : UserControl
     {
-        internal FacebookDataLoader m_DataLoader;
+        internal bool IsDataLoaded { get { return m_DataFacade.IsDataLoaded; } }
+        private FacebookDataFacade m_DataFacade;
         public string DisplayMember { get; set; } = "";
         private bool m_IsPictureSupported = true;
         internal bool IsPictureSupported
@@ -187,8 +189,9 @@ namespace BasicFacebookFeatures
         public FacebookDataListbox()
         {
             InitializeComponent();
-            m_DataLoader = new FacebookDataLoader(ListBox);
-            m_DataLoader.OnDataLoaded += updateUIAfterDataLoad;
+            FacebookDataLoader dataLoader = new FacebookDataLoader(ListBox);
+            m_DataFacade = new FacebookDataFacade(dataLoader);
+            dataLoader.OnDataLoaded += updateUIAfterDataLoad;
         }
 
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -204,12 +207,12 @@ namespace BasicFacebookFeatures
 
         private void loadDataButton_Click(object sender, EventArgs e)
         {
-            new Thread(m_DataLoader.LoadData).Start();
+            m_DataFacade.LoadData(updateUIAfterDataLoad);
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            m_DataLoader.FilterData(searchTextBox.Text.ToLower());
+            m_DataFacade.FilterData(searchTextBox.Text.ToLower());
         }
 
         private void updateUIAfterDataLoad(List<object> dataSource)
@@ -219,9 +222,22 @@ namespace BasicFacebookFeatures
                 this.ListBox.Invoke(new Action(() =>
                 {
                     this.ListBox.DataSource = dataSource;
+                    this.ListBox.DisplayMember = this.DisplayMember;
                 }));
             }).Start();
         }
+
+          
+        public void SetDataSource(object[] i_DataSource)
+        {
+            this.m_DataFacade.SetDataSource(i_DataSource);
+        }
+
+        public List<object> GetDataSource()
+        {
+            return this.m_DataFacade.GetDataSource();
+        }
+
 
         public void SetName(string name)
         {

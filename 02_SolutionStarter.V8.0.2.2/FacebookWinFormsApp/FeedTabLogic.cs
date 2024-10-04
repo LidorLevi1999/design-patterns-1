@@ -21,15 +21,15 @@ namespace BasicFacebookFeatures
 
         public void LoadDataToListboxes(User i_LoggedInUser)
         {
-            m_FeedTab.LikedPageFacebookDataListbox.m_DataLoader.DisplayMember = "Name";
-            m_FeedTab.FavouriteTeamsFacebookDataListbox.m_DataLoader.DisplayMember = "Name";
-            m_FeedTab.PostsFacebookDataListBox.m_DataLoader.DisplayMember = "Message";
+            m_FeedTab.LikedPageFacebookDataListbox.DisplayMember = "Name";
+            m_FeedTab.FavouriteTeamsFacebookDataListbox.DisplayMember = "Name";
+            m_FeedTab.PostsFacebookDataListBox.DisplayMember = "Message";
 
-            m_FeedTab.LikedPageFacebookDataListbox.m_DataLoader.SetDataSource(i_LoggedInUser.LikedPages?.ToArray());
-            m_FeedTab.FavouriteTeamsFacebookDataListbox.m_DataLoader.SetDataSource(i_LoggedInUser.FavofriteTeams?.ToArray());
-            m_FeedTab.PostsFacebookDataListBox.m_DataLoader.SetDataSource(i_LoggedInUser.Posts?.ToArray());
+            m_FeedTab.LikedPageFacebookDataListbox.SetDataSource(i_LoggedInUser.LikedPages?.ToArray());
+            m_FeedTab.FavouriteTeamsFacebookDataListbox.SetDataSource(i_LoggedInUser.FavofriteTeams?.ToArray());
+            m_FeedTab.PostsFacebookDataListBox.SetDataSource(i_LoggedInUser.Posts?.ToArray());
             m_FeedTab.PostsFacebookDataListBox.IsPictureSupported = false;
-            m_FeedTab.AlbumsFacebookDataListbox.m_DataLoader.SetDataSource(i_LoggedInUser.Albums.ToArray());
+            m_FeedTab.AlbumsFacebookDataListbox.SetDataSource(i_LoggedInUser.Albums.ToArray());
             m_FeedTab.AlbumsFacebookDataListbox.IsPictureSupported = false;
         }
 
@@ -82,7 +82,7 @@ namespace BasicFacebookFeatures
         {
             List<object> filteredPosts = new List<object>();
 
-            foreach (var item in m_FeedTab.PostsFacebookDataListBox.m_DataLoader.GetDataSource()?.ToArray() ?? new object[0])
+            foreach (var item in m_FeedTab.PostsFacebookDataListBox.GetDataSource()?.ToArray() ?? new object[0])
             {
                 Post post = item as Post;
 

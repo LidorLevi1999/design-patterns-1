@@ -9,6 +9,8 @@ namespace BasicFacebookFeatures
     {
         public event Action<List<object>> OnDataLoaded;
         private List<object> m_DataSource;
+
+        internal List<object> DataSource { get { return this.m_DataSource; } }
         public string DisplayMember { get; set; } = "";
         private ListBox m_ListBox;
         public bool IsDataLoaded { get; private set; } = false;
@@ -58,7 +60,6 @@ namespace BasicFacebookFeatures
                         return false;
                     })
                     .ToList();
-
                 OnDataLoaded?.Invoke(filteredData);
             }
         }
