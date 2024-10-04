@@ -105,6 +105,8 @@
       <DependentUpon>FeedTab.cs</DependentUpon>
     </Compile>
     <Compile Include="FeedTabLogic.cs" />
+    <Compile Include="FetchFriendsStrategy.cs" />
+    <Compile Include="FetchLikedPageStrategy.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +120,7 @@
       <DependentUpon>FriendsTab.cs</DependentUpon>
     </Compile>
     <Compile Include="FriendsTabLogic.cs" />
+    <Compile Include="IFetchingStrategy.cs" />
     <Compile Include="LikedPageDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>

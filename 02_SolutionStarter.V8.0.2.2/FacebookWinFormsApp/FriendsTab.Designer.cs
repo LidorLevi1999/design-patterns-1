@@ -285,7 +285,7 @@
 
         internal System.Windows.Forms.ListBox myFriendsListBox;
         private System.Windows.Forms.Button fetchFriendsButton;
-        private System.Windows.Forms.BindingSource userBindingSource;
+        internal System.Windows.Forms.BindingSource userBindingSource;
         private System.Windows.Forms.Label birthdayLabel;
         private System.Windows.Forms.Label emailLabel;
         private System.Windows.Forms.Label nameLabel;
@@ -302,7 +302,7 @@
         private System.Windows.Forms.Label wallPostsLabel;
         private System.Windows.Forms.Label eventsLabel;
         private System.Windows.Forms.Label checkInsLabel;
-        private System.Windows.Forms.BindingSource pageBindingSource;
+        internal System.Windows.Forms.BindingSource pageBindingSource;
         private System.Windows.Forms.ListBox pageListBox;
         private System.Windows.Forms.Label likedPageLabel;
     }

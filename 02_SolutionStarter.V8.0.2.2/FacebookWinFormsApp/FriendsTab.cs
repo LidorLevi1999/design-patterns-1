@@ -1,4 +1,7 @@
 ﻿using FacebookWrapper.ObjectModel;
+using System;
+using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
@@ -7,6 +10,8 @@ namespace BasicFacebookFeatures
     {
         internal readonly User r_LoggedInUser;
         private FriendsTabLogic m_FriendsTabLogic;
+        private IFetchingStrategy m_FetchingStrategy;
+
         public FriendsTab(User i_LoggedInUser)
         {
             r_LoggedInUser = i_LoggedInUser;
@@ -14,9 +19,10 @@ namespace BasicFacebookFeatures
             InitializeComponent();
         }
 
-        private void fetchFriendsButton_Click(object sender, System.EventArgs e)
+        private void fetchFriendsButton_Click(object sender, EventArgs e)
         {
-            userBindingSource.DataSource = r_LoggedInUser.Friends;
+            m_FetchingStrategy = new FetchFriendsStrategy(this);
+            new Thread(() => m_FetchingStrategy.FetchData(r_LoggedInUser)).Start();
         }
 
         private void albumsListBox_DoubleClick(object sender, System.EventArgs e)
@@ -24,15 +30,18 @@ namespace BasicFacebookFeatures
             m_FriendsTabLogic.ShowAlbumsPictures(albumsListBox.SelectedItem);
         }
 
-        private void myFriendsListBox_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void myFriendsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListBox friendsListBox = sender as ListBox;
-            User friend = friendsListBox?.SelectedItem as User;
-            if(friend != null)
+            User selectedFriend = friendsListBox?.SelectedItem as User;
+
+            if (selectedFriend != null)
             {
-                pageBindingSource.DataSource = friend.LikedPages;
+                m_FetchingStrategy = new FetchLikedPagesStrategy(this);
+                new Thread(() => m_FetchingStrategy.FetchData(selectedFriend)).Start();
             }
         }
+
 
         private void pageListBox_DoubleClick(object sender, System.EventArgs e)
         {

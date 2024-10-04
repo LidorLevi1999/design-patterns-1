@@ -115,7 +115,7 @@ namespace BasicFacebookFeatures
         {
             if (m_LoginResult == null)
             {
-                new Thread(login).Start();
+                login();
             }
         }
 
