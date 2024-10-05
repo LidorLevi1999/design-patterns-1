@@ -134,6 +134,13 @@
     <Compile Include="MemeCreatorForm.Designer.cs">
       <DependentUpon>MemeCreatorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PhotoProxy.cs" />
+    <Compile Include="PictureDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PictureDetailsForm.Designer.cs">
+      <DependentUpon>PictureDetailsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PicturesGallery.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +173,9 @@
     <EmbeddedResource Include="MemeCreatorForm.resx">
       <DependentUpon>MemeCreatorForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PictureDetailsForm.resx">
+      <DependentUpon>PictureDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PicturesGallery.resx">
       <DependentUpon>PicturesGallery.cs</DependentUpon>
     </EmbeddedResource>
@@ -185,6 +195,7 @@
     <None Include="FacebookWrapper.ObjectModel.Page.datasource" />
     <None Include="FacebookWrapper.ObjectModel.User1.datasource" />
     <None Include="packages.config" />
+    <None Include="PhotoProxy.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

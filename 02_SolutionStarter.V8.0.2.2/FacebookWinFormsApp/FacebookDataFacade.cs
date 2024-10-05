@@ -18,7 +18,10 @@ namespace BasicFacebookFeatures
 
         public void SetDataSource(object[] i_DataSource)
         {
-            m_DataLoader.SetDataSource(i_DataSource);
+            if(i_DataSource != null) 
+            {
+                m_DataLoader.SetDataSource(i_DataSource);
+            }
         }
 
         public List<object> GetDataSource()

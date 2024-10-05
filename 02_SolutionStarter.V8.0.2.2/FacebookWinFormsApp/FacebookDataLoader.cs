@@ -21,7 +21,7 @@ namespace BasicFacebookFeatures
         }
         public void LoadData()
         {
-            if (!IsDataLoaded)
+            if (!IsDataLoaded && m_DataSource != null)
             {
                 IsDataLoaded = true;
                 foreach (var item in m_DataSource)

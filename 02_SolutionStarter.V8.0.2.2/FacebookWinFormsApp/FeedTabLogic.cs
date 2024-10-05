@@ -57,16 +57,19 @@ namespace BasicFacebookFeatures
 
                 new Thread(() =>
                 {
-                    List<string> imageUrls = new List<string>();
+                    // List<string> imageUrls = new List<string>();
+                    List<Photo> photos = new List<Photo>();
 
                     foreach (var picture in selectedItem.Photos)
                     {
-                        imageUrls.Add(picture.PictureNormalURL);
+                        //imageUrls.Add(picture.PictureNormalURL);
+                        photos.Add(picture);
                     }
 
                     picturesGallery.Invoke((MethodInvoker)delegate
                     {
-                        picturesGallery.AddImages(imageUrls);
+                        //picturesGallery.AddImages(imageUrls);
+                        picturesGallery.AddPhotos(photos);
                     });
 
                 })
