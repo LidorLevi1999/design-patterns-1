@@ -55,12 +55,12 @@
             this.GroupBox.TabIndex = 0;
             this.GroupBox.TabStop = false;
             // 
-            // category
+            // CategoryTextLabel
             // 
             this.CategoryTextLabel.AutoSize = true;
             this.CategoryTextLabel.Location = new System.Drawing.Point(6, 2);
-            this.CategoryTextLabel.Name = "category";
-            this.CategoryTextLabel.Size = new System.Drawing.Size(48, 13);
+            this.CategoryTextLabel.Name = "CategoryTextLabel";
+            this.CategoryTextLabel.Size = new System.Drawing.Size(119, 31);
             this.CategoryTextLabel.TabIndex = 4;
             this.CategoryTextLabel.Text = "category";
             // 
@@ -68,7 +68,7 @@
             // 
             this.searchTextBox.Location = new System.Drawing.Point(0, 19);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(147, 20);
+            this.searchTextBox.Size = new System.Drawing.Size(147, 38);
             this.searchTextBox.TabIndex = 3;
             this.searchTextBox.TextChanged += new System.EventHandler(this.searchTextBox_TextChanged);
             // 
@@ -88,7 +88,7 @@
             this.PictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.PictureBox.Location = new System.Drawing.Point(222, 206);
+            this.PictureBox.Location = new System.Drawing.Point(222, 197);
             this.PictureBox.Name = "PictureBox";
             this.PictureBox.Size = new System.Drawing.Size(60, 60);
             this.PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -101,10 +101,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ListBox.FormattingEnabled = true;
+            this.ListBox.ItemHeight = 31;
             this.ListBox.Location = new System.Drawing.Point(0, 67);
             this.ListBox.Name = "ListBox";
             this.ListBox.ScrollAlwaysVisible = true;
-            this.ListBox.Size = new System.Drawing.Size(300, 199);
+            this.ListBox.Size = new System.Drawing.Size(300, 190);
             this.ListBox.TabIndex = 0;
             this.ListBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 

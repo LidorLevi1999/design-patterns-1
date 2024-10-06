@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
 {
@@ -11,25 +12,23 @@ namespace BasicFacebookFeatures
 
         public bool IsDataLoaded { get {  return m_DataLoader.IsDataLoaded; } }
 
-        public FacebookDataFacade(FacebookDataLoader dataLoader)
+        public List<object> DataSource 
         {
-            m_DataLoader = dataLoader;
-        }
-
-        public void SetDataSource(object[] i_DataSource)
-        {
-            if(i_DataSource != null) 
+            get {  return m_DataLoader.DataSource; }
+            set
             {
-                m_DataLoader.SetDataSource(i_DataSource);
+                if (value != null)
+                {
+                    m_DataLoader.DataSource = value;
+                }
             }
         }
 
-        public List<object> GetDataSource()
+        public FacebookDataFacade(ListBox i_ListBox, Action<List<object>> i_DataLoadedAction)
         {
-            return m_DataLoader.GetDataSource();
+            m_DataLoader = new FacebookDataLoader(i_ListBox);
+            m_DataLoader.OnDataLoaded += i_DataLoadedAction;
         }
-
-
 
         public void LoadData(Action<List<object>> onDataLoaded)
         {

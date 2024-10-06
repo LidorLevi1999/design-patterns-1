@@ -10,8 +10,11 @@ namespace BasicFacebookFeatures
         public event Action<List<object>> OnDataLoaded;
         private List<object> m_DataSource;
 
-        internal List<object> DataSource { get { return this.m_DataSource; } }
-        public string DisplayMember { get; set; } = "";
+        internal List<object> DataSource
+        {
+            get { return this.m_DataSource; }
+            set { m_DataSource = value; }
+        }
         private ListBox m_ListBox;
         public bool IsDataLoaded { get; private set; } = false;
 
@@ -30,17 +33,6 @@ namespace BasicFacebookFeatures
                 }
             }
         }
-        public void SetDataSource(object[] i_DataSource)
-        {
-            m_DataSource = i_DataSource.ToList();
-        }
-
-        public List<object> GetDataSource()
-        {
-            return m_DataSource;
-        }
-
-
         public void FilterData(string filterText)
         {
             if (IsDataLoaded)

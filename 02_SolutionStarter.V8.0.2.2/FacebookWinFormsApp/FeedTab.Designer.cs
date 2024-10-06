@@ -63,7 +63,7 @@ namespace BasicFacebookFeatures
             // 
             this.dateTimePickerPostsAfter.Location = new System.Drawing.Point(665, 72);
             this.dateTimePickerPostsAfter.Name = "dateTimePickerPostsAfter";
-            this.dateTimePickerPostsAfter.Size = new System.Drawing.Size(200, 31);
+            this.dateTimePickerPostsAfter.Size = new System.Drawing.Size(200, 38);
             this.dateTimePickerPostsAfter.TabIndex = 5;
             this.dateTimePickerPostsAfter.ValueChanged += new System.EventHandler(this.dateTimePickerPostsAfter_ValueChanged);
             // 
@@ -71,7 +71,7 @@ namespace BasicFacebookFeatures
             // 
             this.dateTimePickerPostsBefore.Location = new System.Drawing.Point(665, 117);
             this.dateTimePickerPostsBefore.Name = "dateTimePickerPostsBefore";
-            this.dateTimePickerPostsBefore.Size = new System.Drawing.Size(200, 31);
+            this.dateTimePickerPostsBefore.Size = new System.Drawing.Size(200, 38);
             this.dateTimePickerPostsBefore.TabIndex = 6;
             this.dateTimePickerPostsBefore.ValueChanged += new System.EventHandler(this.dateTimePickerPostsBefore_ValueChanged);
             // 
@@ -80,7 +80,7 @@ namespace BasicFacebookFeatures
             this.labelPostsAfter.AutoSize = true;
             this.labelPostsAfter.Location = new System.Drawing.Point(665, 53);
             this.labelPostsAfter.Name = "labelPostsAfter";
-            this.labelPostsAfter.Size = new System.Drawing.Size(187, 25);
+            this.labelPostsAfter.Size = new System.Drawing.Size(235, 31);
             this.labelPostsAfter.TabIndex = 7;
             this.labelPostsAfter.Text = "Get all posts after:";
             // 
@@ -89,7 +89,7 @@ namespace BasicFacebookFeatures
             this.labelPostsBefore.AutoSize = true;
             this.labelPostsBefore.Location = new System.Drawing.Point(665, 101);
             this.labelPostsBefore.Name = "labelPostsBefore";
-            this.labelPostsBefore.Size = new System.Drawing.Size(205, 25);
+            this.labelPostsBefore.Size = new System.Drawing.Size(257, 31);
             this.labelPostsBefore.TabIndex = 8;
             this.labelPostsBefore.Text = "Get all posts before:";
             // 
@@ -119,7 +119,6 @@ namespace BasicFacebookFeatures
             this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
             this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.LikedPageFacebookDataListbox.TabIndex = 1;
-            this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.LikedPageFacebookDataListbox_DoubleClick);
             // 
             // AlbumsFacebookDataListbox
             // 
@@ -129,7 +128,6 @@ namespace BasicFacebookFeatures
             this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
             this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.AlbumsFacebookDataListbox.TabIndex = 4;
-            this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);
             // 
             // FeedTab
             // 
