@@ -23,11 +23,7 @@ namespace BasicFacebookFeatures
             pictureIndexListBox.DataSource = photoProxyBindingSource;
             pictureIndexListBox.SelectedIndex = i_SelectedIndex;
             picturesBindingNavigator.BindingSource = photoProxyBindingSource;
-        }
-
-        private void PictureDetailsForm_Load(object sender, EventArgs e)
-        {
-
+            pictureIndexListBox.DisplayMember = "PhotoUrl";
         }
 
         private void generatePhotoProxyList(List<Photo> i_Photos)
