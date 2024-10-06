@@ -7,7 +7,7 @@ namespace BasicFacebookFeatures
 {
     public partial class PicturesGallery : Form
     {
-        public List<Photo> m_Photos;
+        private List<Photo> m_Photos = new List<Photo>();
 
         public PicturesGallery()
         {
@@ -28,7 +28,7 @@ namespace BasicFacebookFeatures
                 };
 
                 picBox.DoubleClick += ImagePictureBox_DoubleClick;
-                galleryFlowLayoutPanel.Controls.Add(picBox); 
+                galleryFlowLayoutPanel.Controls.Add(picBox);
             }
         }
 
