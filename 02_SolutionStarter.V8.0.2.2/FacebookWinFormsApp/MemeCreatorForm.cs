@@ -78,23 +78,9 @@ namespace BasicFacebookFeatures
             {
                 new MemeTextDecorator(new BasicMemeText()).Draw(g, TopMemeText, topFont, TopTextColor, imageSize, true);
                 new MemeTextDecorator(new BasicMemeText()).Draw(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
+                //Alternatively, use ShadowTextDecorator.
             }
         }
-
-        private void drawCenteredText(Graphics i_Graphic, string i_Text, Font i_Font, Color i_Color, Size i_ImageSize, bool i_IsTopText)
-        {
-            using (Brush brush = new SolidBrush(i_Color))
-            {
-                SizeF textSize = i_Graphic.MeasureString(i_Text, i_Font);
-                float xAxis = (i_ImageSize.Width -textSize.Width) / 2 - 30;
-                float yAxis = i_IsTopText ? 20 : 340;
-                
-                i_Graphic.DrawString(i_Text, i_Font, brush, new PointF(xAxis, yAxis));
-
-            }
-        }
-
-
 
         private void colorPickerMemeTopTextButton_Click(object sender, EventArgs e)
         {
