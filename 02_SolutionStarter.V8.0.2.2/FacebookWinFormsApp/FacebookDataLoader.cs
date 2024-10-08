@@ -33,7 +33,7 @@ namespace BasicFacebookFeatures
                 }
             }
         }
-        public void FilterData(string filterText)
+        public void FilterData(string i_FilterText)
         {
             if (IsDataLoaded)
             {
@@ -46,7 +46,7 @@ namespace BasicFacebookFeatures
                         if (nameProperty != null)
                         {
                             var nameValue = nameProperty.GetValue(item)?.ToString().ToLower();
-                            return nameValue != null && nameValue.Contains(filterText);
+                            return nameValue != null && nameValue.Contains(i_FilterText);
                         }
 
                         return false;

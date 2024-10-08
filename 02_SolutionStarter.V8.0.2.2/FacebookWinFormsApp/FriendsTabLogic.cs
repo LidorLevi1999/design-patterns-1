@@ -12,7 +12,6 @@ namespace BasicFacebookFeatures
     internal class FriendsTabLogic
     {
         private FriendsTab m_FriendsTab;
-        internal bool IsDataLoaded { get; set; } = false;
         public FriendsTabLogic(FriendsTab i_FriendsTab)
         {
             this.m_FriendsTab = i_FriendsTab;

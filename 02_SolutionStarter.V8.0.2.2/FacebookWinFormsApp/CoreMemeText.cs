@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-public class BasicMemeText : IMemeText
+public class CoreMemeText : IMemeText
 {
     public void Draw(Graphics i_Graphics, string i_Text, Font i_Font, Color i_Color, Size i_ImageSize, bool i_IsTopText)
     {

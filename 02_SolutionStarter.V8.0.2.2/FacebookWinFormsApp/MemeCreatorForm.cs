@@ -76,9 +76,8 @@ namespace BasicFacebookFeatures
             using (Font topFont = new Font(topFontName, 24, FontStyle.Bold))
             using (Font bottomFont = new Font(bottomFontName, 24, FontStyle.Bold))
             {
-                new MemeTextDecorator(new BasicMemeText()).Draw(g, TopMemeText, topFont, TopTextColor, imageSize, true);
-                new MemeTextDecorator(new BasicMemeText()).Draw(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
-                //Alternatively, use ShadowTextDecorator.
+                new MemeTextDecorator(new ShadowMemeText(new CoreMemeText())).Draw(g, TopMemeText, topFont, TopTextColor, imageSize, true);
+                new MemeTextDecorator(new ShadowMemeText(new CoreMemeText())).Draw(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
             }
         }
 

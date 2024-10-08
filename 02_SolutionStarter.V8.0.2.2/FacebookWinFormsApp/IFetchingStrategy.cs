@@ -9,6 +9,6 @@ namespace BasicFacebookFeatures
 {
     internal interface IFetchingStrategy
     {
-        void FetchData(User user);
+        void FetchData(User i_User);
     }
 }

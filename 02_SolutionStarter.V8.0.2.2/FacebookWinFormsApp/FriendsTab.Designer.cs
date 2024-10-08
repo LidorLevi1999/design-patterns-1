@@ -64,9 +64,11 @@
             // 
             this.myFriendsListBox.DataSource = this.userBindingSource;
             this.myFriendsListBox.FormattingEnabled = true;
-            this.myFriendsListBox.Location = new System.Drawing.Point(21, 61);
+            this.myFriendsListBox.ItemHeight = 16;
+            this.myFriendsListBox.Location = new System.Drawing.Point(28, 75);
+            this.myFriendsListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.myFriendsListBox.Name = "myFriendsListBox";
-            this.myFriendsListBox.Size = new System.Drawing.Size(200, 147);
+            this.myFriendsListBox.Size = new System.Drawing.Size(265, 180);
             this.myFriendsListBox.TabIndex = 0;
             this.myFriendsListBox.SelectedIndexChanged += new System.EventHandler(this.myFriendsListBox_SelectedIndexChanged);
             // 
@@ -76,9 +78,10 @@
             // 
             // fetchFriendsButton
             // 
-            this.fetchFriendsButton.Location = new System.Drawing.Point(21, 23);
+            this.fetchFriendsButton.Location = new System.Drawing.Point(28, 28);
+            this.fetchFriendsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.fetchFriendsButton.Name = "fetchFriendsButton";
-            this.fetchFriendsButton.Size = new System.Drawing.Size(200, 32);
+            this.fetchFriendsButton.Size = new System.Drawing.Size(267, 39);
             this.fetchFriendsButton.TabIndex = 1;
             this.fetchFriendsButton.Text = "Fetch Friends";
             this.fetchFriendsButton.UseVisualStyleBackColor = true;
@@ -87,36 +90,40 @@
             // birthdayLabel
             // 
             this.birthdayLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Birthday", true));
-            this.birthdayLabel.Location = new System.Drawing.Point(18, 325);
+            this.birthdayLabel.Location = new System.Drawing.Point(24, 400);
+            this.birthdayLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.birthdayLabel.Name = "birthdayLabel";
-            this.birthdayLabel.Size = new System.Drawing.Size(100, 23);
+            this.birthdayLabel.Size = new System.Drawing.Size(133, 28);
             this.birthdayLabel.TabIndex = 4;
-            this.birthdayLabel.Text = "bday";
+            this.birthdayLabel.Text = "Birthday";
             // 
             // emailLabel
             // 
             this.emailLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Email", true));
-            this.emailLabel.Location = new System.Drawing.Point(18, 348);
+            this.emailLabel.Location = new System.Drawing.Point(24, 428);
+            this.emailLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.emailLabel.Name = "emailLabel";
-            this.emailLabel.Size = new System.Drawing.Size(100, 23);
+            this.emailLabel.Size = new System.Drawing.Size(133, 28);
             this.emailLabel.TabIndex = 6;
-            this.emailLabel.Text = "email";
+            this.emailLabel.Text = "Email";
             // 
             // nameLabel
             // 
             this.nameLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Name", true));
-            this.nameLabel.Location = new System.Drawing.Point(18, 302);
+            this.nameLabel.Location = new System.Drawing.Point(24, 372);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(100, 23);
+            this.nameLabel.Size = new System.Drawing.Size(133, 28);
             this.nameLabel.TabIndex = 8;
-            this.nameLabel.Text = "name";
+            this.nameLabel.Text = "Name";
             // 
             // imageNormalPictureBox
             // 
             this.imageNormalPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.userBindingSource, "ImageNormal", true));
-            this.imageNormalPictureBox.Location = new System.Drawing.Point(21, 224);
+            this.imageNormalPictureBox.Location = new System.Drawing.Point(28, 276);
+            this.imageNormalPictureBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.imageNormalPictureBox.Name = "imageNormalPictureBox";
-            this.imageNormalPictureBox.Size = new System.Drawing.Size(75, 75);
+            this.imageNormalPictureBox.Size = new System.Drawing.Size(100, 92);
             this.imageNormalPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageNormalPictureBox.TabIndex = 15;
             this.imageNormalPictureBox.TabStop = false;
@@ -131,9 +138,11 @@
             this.albumsListBox.DataSource = this.albumsBindingSource;
             this.albumsListBox.DisplayMember = "Name";
             this.albumsListBox.FormattingEnabled = true;
-            this.albumsListBox.Location = new System.Drawing.Point(267, 61);
+            this.albumsListBox.ItemHeight = 16;
+            this.albumsListBox.Location = new System.Drawing.Point(356, 75);
+            this.albumsListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.albumsListBox.Name = "albumsListBox";
-            this.albumsListBox.Size = new System.Drawing.Size(200, 147);
+            this.albumsListBox.Size = new System.Drawing.Size(265, 180);
             this.albumsListBox.TabIndex = 15;
             this.albumsListBox.ValueMember = "Comments";
             this.albumsListBox.DoubleClick += new System.EventHandler(this.albumsListBox_DoubleClick);
@@ -148,9 +157,11 @@
             this.wallPostsListBox.DataSource = this.wallPostsBindingSource;
             this.wallPostsListBox.DisplayMember = "Message";
             this.wallPostsListBox.FormattingEnabled = true;
-            this.wallPostsListBox.Location = new System.Drawing.Point(267, 240);
+            this.wallPostsListBox.ItemHeight = 16;
+            this.wallPostsListBox.Location = new System.Drawing.Point(356, 295);
+            this.wallPostsListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.wallPostsListBox.Name = "wallPostsListBox";
-            this.wallPostsListBox.Size = new System.Drawing.Size(200, 147);
+            this.wallPostsListBox.Size = new System.Drawing.Size(265, 180);
             this.wallPostsListBox.TabIndex = 15;
             this.wallPostsListBox.ValueMember = "Caption";
             // 
@@ -164,9 +175,11 @@
             this.checkinsListBox.DataSource = this.checkinsBindingSource;
             this.checkinsListBox.DisplayMember = "Place.Name";
             this.checkinsListBox.FormattingEnabled = true;
-            this.checkinsListBox.Location = new System.Drawing.Point(520, 240);
+            this.checkinsListBox.ItemHeight = 16;
+            this.checkinsListBox.Location = new System.Drawing.Point(693, 295);
+            this.checkinsListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.checkinsListBox.Name = "checkinsListBox";
-            this.checkinsListBox.Size = new System.Drawing.Size(200, 147);
+            this.checkinsListBox.Size = new System.Drawing.Size(265, 180);
             this.checkinsListBox.TabIndex = 15;
             this.checkinsListBox.ValueMember = "Caption";
             // 
@@ -180,45 +193,51 @@
             this.eventsListBox.DataSource = this.eventsBindingSource;
             this.eventsListBox.DisplayMember = "Name";
             this.eventsListBox.FormattingEnabled = true;
-            this.eventsListBox.Location = new System.Drawing.Point(520, 61);
+            this.eventsListBox.ItemHeight = 16;
+            this.eventsListBox.Location = new System.Drawing.Point(693, 75);
+            this.eventsListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.eventsListBox.Name = "eventsListBox";
-            this.eventsListBox.Size = new System.Drawing.Size(200, 147);
+            this.eventsListBox.Size = new System.Drawing.Size(265, 180);
             this.eventsListBox.TabIndex = 15;
             this.eventsListBox.ValueMember = "AttendingCount";
             // 
             // albumsLabel
             // 
             this.albumsLabel.AutoSize = true;
-            this.albumsLabel.Location = new System.Drawing.Point(264, 43);
+            this.albumsLabel.Location = new System.Drawing.Point(352, 53);
+            this.albumsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.albumsLabel.Name = "albumsLabel";
-            this.albumsLabel.Size = new System.Drawing.Size(48, 15);
+            this.albumsLabel.Size = new System.Drawing.Size(52, 16);
             this.albumsLabel.TabIndex = 16;
             this.albumsLabel.Text = "Albums";
             // 
             // wallPostsLabel
             // 
             this.wallPostsLabel.AutoSize = true;
-            this.wallPostsLabel.Location = new System.Drawing.Point(264, 224);
+            this.wallPostsLabel.Location = new System.Drawing.Point(352, 276);
+            this.wallPostsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.wallPostsLabel.Name = "wallPostsLabel";
-            this.wallPostsLabel.Size = new System.Drawing.Size(64, 15);
+            this.wallPostsLabel.Size = new System.Drawing.Size(71, 16);
             this.wallPostsLabel.TabIndex = 17;
             this.wallPostsLabel.Text = "Wall Posts";
             // 
             // eventsLabel
             // 
             this.eventsLabel.AutoSize = true;
-            this.eventsLabel.Location = new System.Drawing.Point(517, 43);
+            this.eventsLabel.Location = new System.Drawing.Point(689, 53);
+            this.eventsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.eventsLabel.Name = "eventsLabel";
-            this.eventsLabel.Size = new System.Drawing.Size(43, 15);
+            this.eventsLabel.Size = new System.Drawing.Size(48, 16);
             this.eventsLabel.TabIndex = 18;
             this.eventsLabel.Text = "Events";
             // 
             // checkInsLabel
             // 
             this.checkInsLabel.AutoSize = true;
-            this.checkInsLabel.Location = new System.Drawing.Point(517, 224);
+            this.checkInsLabel.Location = new System.Drawing.Point(689, 276);
+            this.checkInsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.checkInsLabel.Name = "checkInsLabel";
-            this.checkInsLabel.Size = new System.Drawing.Size(57, 15);
+            this.checkInsLabel.Size = new System.Drawing.Size(62, 16);
             this.checkInsLabel.TabIndex = 19;
             this.checkInsLabel.Text = "Checkins";
             // 
@@ -231,9 +250,11 @@
             this.pageListBox.DataSource = this.pageBindingSource;
             this.pageListBox.DisplayMember = "Name";
             this.pageListBox.FormattingEnabled = true;
-            this.pageListBox.Location = new System.Drawing.Point(758, 61);
+            this.pageListBox.ItemHeight = 16;
+            this.pageListBox.Location = new System.Drawing.Point(1011, 75);
+            this.pageListBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pageListBox.Name = "pageListBox";
-            this.pageListBox.Size = new System.Drawing.Size(200, 147);
+            this.pageListBox.Size = new System.Drawing.Size(265, 180);
             this.pageListBox.TabIndex = 19;
             this.pageListBox.ValueMember = "AccessToken";
             this.pageListBox.DoubleClick += new System.EventHandler(this.pageListBox_DoubleClick);
@@ -241,15 +262,16 @@
             // likedPageLabel
             // 
             this.likedPageLabel.AutoSize = true;
-            this.likedPageLabel.Location = new System.Drawing.Point(755, 43);
+            this.likedPageLabel.Location = new System.Drawing.Point(1007, 53);
+            this.likedPageLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.likedPageLabel.Name = "likedPageLabel";
-            this.likedPageLabel.Size = new System.Drawing.Size(75, 15);
+            this.likedPageLabel.Size = new System.Drawing.Size(83, 16);
             this.likedPageLabel.TabIndex = 20;
             this.likedPageLabel.Text = "Liked Pages";
             // 
             // FriendsTab
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.likedPageLabel);
             this.Controls.Add(this.pageListBox);
@@ -267,8 +289,9 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.fetchFriendsButton);
             this.Controls.Add(this.myFriendsListBox);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FriendsTab";
-            this.Size = new System.Drawing.Size(1266, 666);
+            this.Size = new System.Drawing.Size(1688, 820);
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.imageNormalPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.albumsBindingSource)).EndInit();

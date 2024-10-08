@@ -61,20 +61,20 @@ namespace BasicFacebookFeatures
             m_DataFacade.FilterData(searchTextBox.Text.ToLower());
         }
 
-        private void updateUIAfterDataLoad(List<object> dataSource)
+        private void updateUIAfterDataLoad(List<object> i_DataSource)
         {
             new Thread(() =>
             {
                 this.ListBox.Invoke(new Action(() =>
                 {
-                    this.ListBox.DataSource = dataSource;
+                    this.ListBox.DataSource = i_DataSource;
                     this.ListBox.DisplayMember = this.DisplayMember;
                 }));
             }).Start();
         }
-        public void SetName(string name)
+        public void SetName(string i_Name)
         {
-            this.CategoryTextLabel.Text = name;
+            this.CategoryTextLabel.Text = i_Name;
         }
     }
 }

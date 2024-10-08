@@ -11,14 +11,14 @@ namespace BasicFacebookFeatures
     {
         private FriendsTab m_FriendsTab;
 
-        public FetchFriendsStrategy(FriendsTab friendsTab)
+        public FetchFriendsStrategy(FriendsTab i_FriendsTab)
         {
-            m_FriendsTab = friendsTab;
+            m_FriendsTab = i_FriendsTab;
         }
 
-        public void FetchData(User user)
+        public void FetchData(User i_User)
         {
-            var friends = user.Friends;
+            var friends = i_User.Friends;
             m_FriendsTab.Invoke(new Action(() =>
             {
                 m_FriendsTab.userBindingSource.DataSource = friends;

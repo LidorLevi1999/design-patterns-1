@@ -26,7 +26,6 @@ namespace BasicFacebookFeatures
             m_FeedTab.PostsFacebookDataListBox.DisplayMember = "Message";
 
             m_FeedTab.LikedPageFacebookDataListbox.DataSource = (i_LoggedInUser.LikedPages?.ToArray() as Object[]).ToList();
-            //m_FeedTab.FavouriteTeamsFacebookDataListbox.DataSource = (i_LoggedInUser.FavofriteTeams?.ToArray() as Object[]).ToList();
             m_FeedTab.PostsFacebookDataListBox.DataSource = (i_LoggedInUser.Posts?.ToArray() as Object[]).ToList();
             m_FeedTab.FavouriteTeamsFacebookDataListbox.DataSource = i_LoggedInUser.FavofriteTeams != null? (i_LoggedInUser.FavofriteTeams?.ToArray() as Object[]).ToList(): new List<object>();
 
