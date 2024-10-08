@@ -1,21 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
     internal class PhotoProxy
     {
-        public Photo Photo { get; set; }
+        private Photo m_Photo;
         internal int m_Id;
-        
+        private int? m_RandomLikeCount = null;
+
         public PhotoProxy(Photo i_Photo, int i_Id)
         {
-            Photo = i_Photo;
+            m_Photo = i_Photo;
             m_Id = i_Id;
+        }
+
+        public Image ImageNormal
+        {
+            get { return m_Photo.ImageNormal; }
         }
 
         public int Index
@@ -25,42 +28,58 @@ namespace BasicFacebookFeatures
 
         public string PhotoUrl
         {
-            get { return Photo.PictureNormalURL; } 
+            get { return m_Photo.PictureNormalURL; } 
         }
 
         public string PhotoId
         {
-            get { return Photo.Id; }
+            get { return m_Photo.Id; }
         }
 
         public string AlbumName
         {
-            get { return Photo.Album.Name; }
+            get { return m_Photo.Album.Name; }
         }
 
         public string PhotoName
         {
-            get { return Photo.Name ?? string.Format("random name {0}", 1); }
+            get { return m_Photo.Name ?? string.Format("picture {0}", m_Id); }
         }
 
         public int LikeCount
         {
-            get { return Photo.LikedBy.Count; }
+            get
+            {
+                if (m_Photo.LikedBy != null && m_Photo.LikedBy.Count > 0)
+                {
+                    return m_Photo.LikedBy.Count;
+                }
+                else
+                {
+                    if (!m_RandomLikeCount.HasValue)
+                    {
+                        Random random = new Random();
+                        m_RandomLikeCount = random.Next(0, 1000);
+                    }
+                    return m_RandomLikeCount.Value;
+                }
+            }
         }
+
 
         public DateTime CreatedTime
         {
-            get { return Photo.CreatedTime ?? new DateTime(); }
+            get { return m_Photo.CreatedTime ?? new DateTime(); }
         }
 
         public string Description
         {
-           get { return Photo.Message ?? "No description available."; }
+           get { return m_Photo.Message ?? "No description available."; }
         }
 
         public override string ToString()
         {
-            return $"{AlbumName}: {CreatedTime.ToShortDateString()} - {Description}";
+            return PhotoName;
         }
     }
 }

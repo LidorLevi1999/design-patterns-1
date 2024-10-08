@@ -130,11 +130,15 @@
                      </ControlSetting>
                   </ControlSettings>
                </PropertyUISetting>
+               <PropertyUISetting Name="PhotoProxy.Photo">
+                  <ControlSettings>
+                     <ControlSetting ArtifactName="Microsoft:System.Windows.Forms:Form">
+                        <BindableControlInfo Name="[None]" Type="Microsoft.VSDesigner.Data.BindManager.NoneControlPlaceHolder" />
+                     </ControlSetting>
+                  </ControlSettings>
+               </PropertyUISetting>
             </PropertyUISettings>
          </TypeUISetting>
-      </GenericObjectDataSource>
-      <GenericObjectDataSource DisplayName="Tags" Version="1.0">
-         <TypeInfo>FacebookWrapper.ObjectModel.PhotoTag, FbGraphApiWrapper, Version=8.0.2.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
       </GenericObjectDataSource>
       <GenericObjectDataSource DisplayName="Album" Version="1.0">
          <TypeInfo>FacebookWrapper.ObjectModel.Album, FbGraphApiWrapper, Version=8.0.2.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
@@ -149,9 +153,6 @@
                </PropertyUISetting>
             </PropertyUISettings>
          </TypeUISetting>
-      </GenericObjectDataSource>
-      <GenericObjectDataSource DisplayName="Images" Version="1.0">
-         <TypeInfo>FacebookWrapper.ObjectModel.FBImage, FbGraphApiWrapper, Version=8.0.2.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
       </GenericObjectDataSource>
       <GenericObjectDataSource DisplayName="Pictures" Version="1.0">
          <TypeInfo>FacebookWrapper.ObjectModel.PicturesColleciton, FbGraphApiWrapper, Version=8.0.2.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
@@ -194,9 +195,6 @@
                </PropertyUISetting>
             </PropertyUISettings>
          </TypeUISetting>
-      </GenericObjectDataSource>
-      <GenericObjectDataSource DisplayName="Comments" Version="1.0">
-         <TypeInfo>FacebookWrapper.ObjectModel.Comment, FbGraphApiWrapper, Version=8.0.2.2, Culture=neutral, PublicKeyToken=null</TypeInfo>
       </GenericObjectDataSource>
    </Children>
    <TypeInfo>BasicFacebookFeatures.PhotoProxy, BasicFacebookFeatures, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
