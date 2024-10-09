@@ -11,6 +11,7 @@ public class ShadowMemeText : MemeTextDecorator
             SizeF textSize = i_Graphics.MeasureString(i_Text, i_Font);
             float xAxis = (i_ImageSize.Width - textSize.Width) / 2 - 30 + 2;
             float yAxis = i_IsTopText ? 20 + 2 : 340 + 2; 
+
             i_Graphics.DrawString(i_Text, i_Font, shadowBrush, new PointF(xAxis, yAxis));
         }
 

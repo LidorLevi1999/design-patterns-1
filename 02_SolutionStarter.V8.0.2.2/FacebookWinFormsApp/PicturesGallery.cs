@@ -41,6 +41,7 @@ namespace BasicFacebookFeatures
             {
                 imageUrl.Add(photo.PictureNormalURL);
             }
+
             this.AddImages(imageUrl);
         }
 
@@ -58,6 +59,7 @@ namespace BasicFacebookFeatures
                 }
 
                 PictureDetailsForm pictureDetailsForm = new PictureDetailsForm(this.m_Photos, imageIndex);
+
                 this.Hide();
                 pictureDetailsForm.FormClosed += PictureDetailsForm_FormClosed;
                 pictureDetailsForm.Show();
@@ -72,17 +74,20 @@ namespace BasicFacebookFeatures
         private int getPhotoByImageUrl(string i_Url)
         {
             int count = 0;
+
             foreach (Photo photo in m_Photos)
             {
-                if(photo.PictureNormalURL == i_Url)
-                { 
-                    return count; 
+                if (photo.PictureNormalURL == i_Url)
+                {
+                    break;
                 }
+
                 count++;
             }
 
-            return -1;
+            return count == 0 ? -1 : count;
         }
+
 
 
     }

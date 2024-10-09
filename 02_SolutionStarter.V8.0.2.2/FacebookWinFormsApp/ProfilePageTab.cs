@@ -51,7 +51,6 @@ namespace BasicFacebookFeatures
             newStatusTextbox.Leave += setPlaceholder;
         }
 
-
         private void setPlaceholder(object sender, EventArgs e)
         {
             TextBox textBox = sender as TextBox;

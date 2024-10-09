@@ -9,6 +9,7 @@ public class CoreMemeText : IMemeText
             SizeF textSize = i_Graphics.MeasureString(i_Text, i_Font);
             float xAxis = (i_ImageSize.Width - textSize.Width) / 2 - 30;
             float yAxis = i_IsTopText ? 20 : 340;
+
             i_Graphics.DrawString(i_Text, i_Font, brush, new PointF(xAxis, yAxis));
         }
     }

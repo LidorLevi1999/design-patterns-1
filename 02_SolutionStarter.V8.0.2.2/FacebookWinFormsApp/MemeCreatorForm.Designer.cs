@@ -53,7 +53,7 @@
             this.MemePictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.MemePictureBox.TabIndex = 0;
             this.MemePictureBox.TabStop = false;
-            this.MemePictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.MemePictureBox_Paint);
+            this.MemePictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.memePictureBox_Paint);
             // 
             // topMemeLabel
             // 

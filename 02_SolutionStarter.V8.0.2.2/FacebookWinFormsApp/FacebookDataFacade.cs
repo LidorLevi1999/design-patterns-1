@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -14,7 +13,11 @@ namespace BasicFacebookFeatures
 
         public List<object> DataSource 
         {
-            get {  return m_DataLoader.DataSource; }
+            get 
+            {
+                return m_DataLoader.DataSource;
+            }
+            
             set
             {
                 if (value != null)
@@ -40,9 +43,9 @@ namespace BasicFacebookFeatures
             }).Start();
         }
 
-        public void FilterData(string filterText)
+        public void FilterData(string i_FilteredText)
         {
-            m_DataLoader.FilterData(filterText);
+            m_DataLoader.FilterData(i_FilteredText);
         }
     }
 

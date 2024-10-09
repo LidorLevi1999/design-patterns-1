@@ -66,9 +66,9 @@ namespace BasicFacebookFeatures
             invalidateMemePictureBox();
         }
 
-        private void MemePictureBox_Paint(object sender, PaintEventArgs e)
+        private void memePictureBox_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
+            Graphics graphics = e.Graphics;
             var imageSize = MemePictureBox.Image.Size;
             string topFontName = topMemeTextFontComboBox.SelectedItem?.ToString() ?? r_DefaultFont;
             string bottomFontName = bottomMemeTextFontComboBox.SelectedItem?.ToString() ?? r_DefaultFont;
@@ -76,8 +76,8 @@ namespace BasicFacebookFeatures
             using (Font topFont = new Font(topFontName, 24, FontStyle.Bold))
             using (Font bottomFont = new Font(bottomFontName, 24, FontStyle.Bold))
             {
-                new MemeTextDecorator(new ShadowMemeText(new CoreMemeText())).Draw(g, TopMemeText, topFont, TopTextColor, imageSize, true);
-                new MemeTextDecorator(new ShadowMemeText(new CoreMemeText())).Draw(g, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
+                new MemeTextDecorator(new ShadowMemeText(new CoreMemeText())).Draw(graphics, TopMemeText, topFont, TopTextColor, imageSize, true);
+                new MemeTextDecorator(new ShadowMemeText(new CoreMemeText())).Draw(graphics, BottomMemeText, bottomFont, BottomTextColor, imageSize, false);
             }
         }
 
@@ -133,15 +133,17 @@ namespace BasicFacebookFeatures
             try
             {
                 string directoryPath = Path.Combine(Application.StartupPath, m_MemesDirectoryPath);
+
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);
                 }
+
                 string filePath = Path.Combine(Application.StartupPath, saveMemeFileName);
+
                 using (Bitmap memeImage = new Bitmap(MemePictureBox.Width, MemePictureBox.Height))
                 {
                     MemePictureBox.DrawToBitmap(memeImage, new Rectangle(0, 0, MemePictureBox.Width, MemePictureBox.Height));
-
                     memeImage.Save(filePath, System.Drawing.Imaging.ImageFormat.Png);
                 }
 

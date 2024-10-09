@@ -20,6 +20,7 @@ namespace BasicFacebookFeatures
         public void ShowAlbumsPictures(object sender)
         {
             Album selectedAlbum = sender as Album;
+
             if (selectedAlbum?.Count > 0)
             {
                 PicturesGallery picturesGallery = new PicturesGallery();
@@ -35,6 +36,7 @@ namespace BasicFacebookFeatures
                         photos.Add(picture);
 
                     }
+
                     picturesGallery.Invoke((MethodInvoker)delegate
                     {
                         picturesGallery.AddPhotos(photos);

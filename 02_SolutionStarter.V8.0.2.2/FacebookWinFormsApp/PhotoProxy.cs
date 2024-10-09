@@ -66,7 +66,6 @@ namespace BasicFacebookFeatures
             }
         }
 
-
         public DateTime CreatedTime
         {
             get { return m_Photo.CreatedTime ?? new DateTime(); }

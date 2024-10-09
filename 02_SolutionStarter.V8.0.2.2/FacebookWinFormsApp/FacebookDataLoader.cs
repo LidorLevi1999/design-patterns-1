@@ -40,16 +40,17 @@ namespace BasicFacebookFeatures
                 List<object> filteredData = m_DataSource
                     .Where(item =>
                     {
+                        bool result = false;
                         var itemType = item.GetType();
                         var nameProperty = itemType.GetProperty("Name");
 
                         if (nameProperty != null)
                         {
                             var nameValue = nameProperty.GetValue(item)?.ToString().ToLower();
-                            return nameValue != null && nameValue.Contains(i_FilterText);
+                            result =  nameValue != null && nameValue.Contains(i_FilterText);
                         }
 
-                        return false;
+                        return result;
                     })
                     .ToList();
                 OnDataLoaded?.Invoke(filteredData);

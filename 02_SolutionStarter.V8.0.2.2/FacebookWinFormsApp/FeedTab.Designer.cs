@@ -119,7 +119,7 @@ namespace BasicFacebookFeatures
             this.LikedPageFacebookDataListbox.Name = "LikedPageFacebookDataListbox";
             this.LikedPageFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.LikedPageFacebookDataListbox.TabIndex = 1;
-            this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.LikedPageFacebookDataListbox_DoubleClick);
+            this.LikedPageFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.likedPageFacebookDataListbox_DoubleClick);
 
             // 
             // AlbumsFacebookDataListbox
@@ -130,7 +130,7 @@ namespace BasicFacebookFeatures
             this.AlbumsFacebookDataListbox.Name = "AlbumsFacebookDataListbox";
             this.AlbumsFacebookDataListbox.Size = new System.Drawing.Size(328, 300);
             this.AlbumsFacebookDataListbox.TabIndex = 4;
-            this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.AlbumsFacebookDataListbox_DoubleClick);
+            this.AlbumsFacebookDataListbox.ListBox.DoubleClick += new System.EventHandler(this.albumsFacebookDataListbox_DoubleClick);
 
             // 
             // FeedTab

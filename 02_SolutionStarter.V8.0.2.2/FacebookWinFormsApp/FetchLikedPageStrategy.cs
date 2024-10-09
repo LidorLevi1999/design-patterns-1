@@ -15,9 +15,11 @@ namespace BasicFacebookFeatures
         {
             m_FriendsTab = i_FriendsTab;
         }
+
         public void FetchData(User i_User)
         {
             var likedPages = i_User.LikedPages;
+
             m_FriendsTab.Invoke(new Action(() =>
             {
                 m_FriendsTab.pageBindingSource.DataSource = likedPages;

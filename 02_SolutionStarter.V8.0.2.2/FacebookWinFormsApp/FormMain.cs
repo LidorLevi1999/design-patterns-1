@@ -2,9 +2,7 @@
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using Facebook;
 using FacebookWrapper;
-using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
@@ -15,7 +13,7 @@ namespace BasicFacebookFeatures
         private LoginResult m_LoginResult;
         internal LoginResult LoginResult { get { return m_LoginResult; } }
         private Size m_MinimumSize = new Size(800, 800);
-        public string FacebookAppId { get; } = "611392880818813";
+        public string FacebookAppId { get; } = "899084605365060";
         public FormMain()
         {
             FacebookWrapper.FacebookService.s_CollectionLimit = 25;
@@ -187,7 +185,9 @@ namespace BasicFacebookFeatures
 
             feedTab.m_Logic.LoadDataToListboxes(m_LoginResult.LoggedInUser);
             feedTab.PostsFacebookDataListBox.IsPictureSupported = false;
+
             TabPage feedTabPage = new TabPage(feedTab.Name);
+
             feedTabPage.Controls.Add(feedTab);
             this.feedTabPage = feedTabPage;
         }
@@ -196,11 +196,10 @@ namespace BasicFacebookFeatures
         {
             FriendsTab friendsTab = new FriendsTab(m_LoginResult.LoggedInUser);
             TabPage friendsTabPage = new TabPage("Friends");
+
             friendsTabPage.Controls.Add(friendsTab);
-            
             this.friendsTabPage = friendsTabPage;
         }
-
 
         private void rememberMeCheckbox_CheckedChanged(object sender, EventArgs e)
         {

@@ -65,12 +65,12 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void LikedPageFacebookDataListbox_DoubleClick(object sender, EventArgs e)
+        private void likedPageFacebookDataListbox_DoubleClick(object sender, EventArgs e)
         {
             m_Logic.ShowLikedPageDetails(sender);
         }
 
-        private void AlbumsFacebookDataListbox_DoubleClick(object sender, EventArgs e)
+        private void albumsFacebookDataListbox_DoubleClick(object sender, EventArgs e)
         {
             m_Logic.ShowAlbumDetails(sender);
         }
